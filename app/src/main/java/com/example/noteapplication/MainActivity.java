@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         edtUserName = (EditText)findViewById(R.id.editTextUserName);
         edtPassWord = (EditText)findViewById(R.id.editTextPassWord);
         btnLogin = (Button)findViewById(R.id.buttonLogin);
+        Button btnExit = (Button) findViewById(R.id.btnExit);
 
         btnLogin.setOnClickListener (new View.OnClickListener()
         {
@@ -37,6 +38,15 @@ public class MainActivity extends AppCompatActivity {
                 {
                     Toast.makeText(getApplicationContext(),"Tài khoản hoặc mật khẩu sai",Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        btnExit.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                finish();
+                System.exit(0);
             }
         });
     }

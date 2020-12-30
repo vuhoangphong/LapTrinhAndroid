@@ -9,6 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NoteApplication">
+        <activity android:name=".Note_Activity"></activity>
+        <activity android:name=".Status_Activity" />
+        <activity android:name=".Priority_Activity" />
+        <activity android:name=".Category_Activity" />
+        <activity android:name=".Dashboard_Activity" />
+        <activity android:name=".LogIn_Activity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

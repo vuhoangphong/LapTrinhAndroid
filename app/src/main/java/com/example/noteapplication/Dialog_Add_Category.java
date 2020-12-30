@@ -1,17 +1,22 @@
 package com.example.noteapplication;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+import java.util.Calendar;
+
 public class Dialog_Add_Category extends AppCompatDialogFragment {
+    private dialog_Add_Category_Listener dialogAddCategoryListener;
     @Override
     public Dialog onCreateDialog( Bundle savedInstanceState) {
 
@@ -27,10 +32,27 @@ public class Dialog_Add_Category extends AppCompatDialogFragment {
         }).setPositiveButton("add", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                EditText txt =  (EditText)view.findViewById(R.id.inputCategory);
+                String category= txt.getText().toString() ;
+                String date = Calendar.getInstance().getTime().toString();
+                dialogAddCategoryListener.applyAdd(category,date);
             }
         });
-        view.findViewById(R.id.)
+
         return builder.create();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try{
+            dialogAddCategoryListener = (dialog_Add_Category_Listener) context;
+        }catch (ClassCastException e){
+            throw new ClassCastException(context.toString()+"error");
+        }
+    }
+
+    public  interface  dialog_Add_Category_Listener{
+        void applyAdd(String category, String date);
     }
 }

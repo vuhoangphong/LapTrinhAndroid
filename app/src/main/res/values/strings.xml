@@ -16,4 +16,11 @@
     <string name="menu_editAcc">Edit Profile</string>
     <string name="menu_pass">Change Pass</string>
     <string name="lb_menu">Account</string>
+
+
+
+
+    //category
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>

@@ -37,7 +37,7 @@
                         android:icon="@drawable/profile"
                         android:title="@string/menu_editAcc"/>
                     <item
-                        android:id="@+id/changePass"
+                        android:id="@+id/nav_changepass"
                         android:icon="@drawable/privacy"
                         android:title="@string/menu_pass"/>
 

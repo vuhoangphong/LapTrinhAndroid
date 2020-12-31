@@ -12,18 +12,19 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/Theme.NoteApplication.NoActionBar"></activity>
+            android:theme="@style/Theme.NoteApplication.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".Note_Activity" />
         <activity android:name=".Status_Activity" />
         <activity android:name=".Priority_Activity" />
         <activity android:name=".Dashboard_Activity" />
         <activity android:name=".LogIn_Activity" />
         <activity android:name=".Category_Activity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

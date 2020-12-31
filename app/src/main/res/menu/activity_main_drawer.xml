@@ -3,18 +3,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="single" android:id="@+id/g1">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/home"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_category"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
+            android:title="@string/menu_category" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_slideshow" />
+
+        <item
+            android:id="@+id/nav_status"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/menu_status" />
+        <item
+            android:id="@+id/nav_note"
+            android:icon="@drawable/note"
+            android:title="@string/menu_note" />
+    </group>
+    <group android:checkableBehavior="single" android:id="@+id/g2">
+        <item
+            android:title="@string/lb_menu"
+            android:id="@+id/menu_search_option">
+            <menu>
+                <group>
+                    <item
+                        android:id="@+id/EDProfile"
+                        android:icon="@drawable/profile"
+                        android:title="@string/menu_editAcc"/>
+                    <item
+                        android:id="@+id/changePass"
+                        android:icon="@drawable/privacy"
+                        android:title="@string/menu_pass"/>
+
+                </group>
+            </menu>
+        </item>
+
     </group>
 </menu>

@@ -1,8 +1,6 @@
 package com.example.noteapplication;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 
@@ -61,22 +59,5 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
-    }
-
-    public void openDashboard(View view) {
-        Intent intent = new Intent(MainActivity.this, Dashboard_Activity.class);
-        startActivity(intent);
-    }
-    public void openNote(View view) {
-        Intent intent = new Intent(MainActivity.this, Note_Activity.class);
-        startActivity(intent);
-    }
-    public void openCategory(MenuItem item) {
-        Intent intent = new Intent(MainActivity.this, Category_Activity.class);
-        startActivity(intent);
-    }
-    public void openPriority(MenuItem item) {
-        Intent intent = new Intent(MainActivity.this, Priority_Activity.class);
-        startActivity(intent);
     }
 }

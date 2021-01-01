@@ -1,7 +1,11 @@
 package com.example.noteapplication.ui.priority;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,12 +15,38 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.PopupMenu;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.noteapplication.MainActivity;
 import com.example.noteapplication.R;
+import com.example.noteapplication.ui.category.CategoryOJ;
+import com.example.noteapplication.ui.category.CategoryViewModel;
+import com.example.noteapplication.ui.category.Category_dialog;
+import com.example.noteapplication.ui.category.category;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class priority extends Fragment {
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
+public class priority extends Fragment implements Priority_dialog.dialog_Add_Priority_Listener{
+
+    private  static  String TAG="priority";
     private PriorityViewModel mViewModel;
+
+    private List<PriorityOJ> listPriority = new ArrayList<PriorityOJ>();
+    private int index = 0;
+    private ListView listView;
+    ArrayList<PriorityOJ> arrayPriority = new ArrayList<PriorityOJ>();
+    private PriorityAdapter adapter = null;
+    Button cancel,add;
 
     public static priority newInstance() {
         return new priority();
@@ -25,7 +55,56 @@ public class priority extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.priority_fragment, container, false);
+        View v = inflater.inflate(R.layout.priority_fragment, container, false);
+        FloatingActionButton b = v.findViewById(R.id.fabAdd);
+        listView = v.findViewById(R.id.lvPriority);
+        b.setOnClickListener(new View.OnClickListener() {  // button click
+            @Override
+            public void onClick(View v) {
+                openDialog();
+            }
+        });
+
+        return v;
+    }
+
+    public  void openDialog(){
+        Priority_dialog dialogAddPriority = new Priority_dialog();
+        dialogAddPriority.show(getChildFragmentManager(),"example dialog");
+    }
+
+    @Override
+    public void applyAdd(String priority, String date) {
+        PriorityOJ p = new PriorityOJ();
+        p.setName(priority);
+        p.setCreatedate(date);
+        listPriority.add(p);
+        adapter = new PriorityAdapter() ;
+        listView.setAdapter(adapter);
+
+    }
+
+    public class PriorityAdapter extends ArrayAdapter<PriorityOJ>{
+        public PriorityAdapter(Context context ,int textViewResourceId){
+            super(context,textViewResourceId);
+        }
+        public PriorityAdapter(){
+            super(priority.this.getContext(), android.R.layout.simple_list_item_1,listPriority);
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            View row = convertView;
+            if(row == null){
+                LayoutInflater inflater = getLayoutInflater();
+                row = inflater.inflate(R.layout.row_priority,null);
+            }
+            PriorityOJ p = listPriority.get(position);
+            ((TextView)row.findViewById(R.id.name)).setText(p.getName());
+            ((TextView)row.findViewById(R.id.date)).setText(p.getCreatedate());
+            return row;
+        }
     }
 
     @Override
@@ -35,4 +114,7 @@ public class priority extends Fragment {
         // TODO: Use the ViewModel
     }
 
+    public  interface  dialog_Add_Priority_Listener{
+        void applyAdd(String priority, String date);
+    }
 }

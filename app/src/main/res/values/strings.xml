@@ -27,4 +27,6 @@
     <string name="delete">Delete</string>
     <string name="cancel">cancel</string>
     <string name="add">add</string>
+    <string name="register">Register</string>
+
 </resources>

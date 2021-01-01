@@ -25,4 +25,6 @@
     //category
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="cancel">cancel</string>
+    <string name="add">add</string>
 </resources>

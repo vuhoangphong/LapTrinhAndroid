@@ -18,7 +18,8 @@
     <string name="menu_pass">Change Pass</string>
     <string name="lb_menu">Account</string>
 
-
+    <string name="incorrectUserPass">Incorrect UserName Or PassWord</string>
+    <string name="inputUserNamePass">Input UserName Or Password</string>
     <string name="lb_changeyourpass">Change Your PassWord</string>
 
     //category

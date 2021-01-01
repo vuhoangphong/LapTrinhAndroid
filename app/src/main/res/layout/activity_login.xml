@@ -14,8 +14,8 @@
 
     <CheckBox
         android:id="@+id/remember_me"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="157dp"
+        android:layout_height="48dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="380dp"
         android:text="Remember me"
@@ -53,46 +53,46 @@
     <Button
         android:id="@+id/buttonLogin"
         android:layout_width="299dp"
-        android:layout_height="75dp"
+        android:layout_height="70dp"
 
         android:text="Login"
-        android:textColor="#FFFF00"
+        android:textColor="@color/white"
         android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.725"></Button>
+        app:layout_constraintVertical_bias="0.738"></Button>
 
     <Button
         android:id="@+id/btnSignUp"
-        android:layout_width="293dp"
-        android:layout_height="75dp"
+        android:layout_width="299dp"
+        android:layout_height="70dp"
         android:text="Register"
-        android:textColor="#FFFF00"
+        android:textColor="@color/white"
         android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.858"></Button>
+        app:layout_constraintVertical_bias="0.856"></Button>
 
     <TextView
         android:id="@+id/editTextTextPersonName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:textColor="@color/black"
-        android:textSize="12dp"
         android:enabled="false"
         android:inputType="textPersonName"
-        android:text="17DTHA3"
+        android:text="17DTHA3 (ver 1.0.0)"
+        android:textColor="@color/black"
+        android:textSize="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.578"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.994" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
         android:id="@+id/imageView3"

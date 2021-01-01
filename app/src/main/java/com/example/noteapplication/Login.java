@@ -20,6 +20,7 @@ public class Login extends AppCompatActivity {
         EditText etPass = (EditText) findViewById(R.id.editTextPassWord);
 
         Button button = (Button) findViewById(R.id.buttonLogin);
+        Button btnRegister = (Button) findViewById(R.id.btnSignUp);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
@@ -35,6 +36,15 @@ public class Login extends AppCompatActivity {
                     Toast.makeText(Login.this,R.string.inputUserNamePass,Toast.LENGTH_LONG).show();
             }
         }});
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Perform action on click
+
+                        Intent intent = new Intent(Login.this,SignUp.class);
+                        startActivity(intent);
+
+            }});
 
         }
     }

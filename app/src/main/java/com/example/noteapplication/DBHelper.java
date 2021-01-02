@@ -37,7 +37,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "CREATE TABLE " + TABLE_CATEGORY + " ( ID    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, NameCategory    TEXT UNIQUE, DateCate    TEXT)"
         );
         db.execSQL(
-                "CREATE TABLE " + TABLE_NOTE + " ( ID    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Priority    TEXT, Category    TEXT, Status    TEXT, Content    TEXT, DateCreate    TEXT, FOREIGN KEY(Priority) REFERENCES Priority (ID), FOREIGN KEY(Status) REFERENCES Status(ID), FOREIGN KEY(Category) REFERENCES Category(ID) )"
+                "CREATE TABLE " + TABLE_NOTE + " ( ID    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Priority    TEXT, Category    TEXT, Status    TEXT, Content    TEXT, DateCreate    TEXT,PlanDate    TEXT,FOREIGN KEY(Priority) REFERENCES Priority (ID), FOREIGN KEY(Status) REFERENCES Status(ID), FOREIGN KEY(Category) REFERENCES Category(ID) )"
         );
         db.execSQL(
                 "CREATE TABLE " + TABLE_PRIORITY + " ( ID    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " + COLUMN_PRIORITY_NAME_PRIORITY + "    TEXT UNIQUE, " + COLUMN_PRIORITY_DATE_PRI + "    TEXT)"

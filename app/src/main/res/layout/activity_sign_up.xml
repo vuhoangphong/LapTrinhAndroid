@@ -32,7 +32,7 @@
         app:layout_constraintVertical_bias="0.299" />
 
     <EditText
-        android:id="@+id/etUserFirstName2"
+        android:id="@+id/etUserFirstName"
         android:layout_width="match_parent"
         android:layout_height="46dp"
         android:ems="10"
@@ -56,7 +56,7 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/etPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -92,7 +92,7 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/btnAddAcc"
         android:layout_width="59dp"
         android:layout_height="56dp"
         android:clickable="true"

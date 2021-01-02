@@ -33,7 +33,7 @@
             <menu>
                 <group>
                     <item
-                        android:id="@+id/EDProfile"
+                        android:id="@+id/nav_EDProfile"
                         android:icon="@drawable/profile"
                         android:title="@string/menu_editAcc"/>
                     <item

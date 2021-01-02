@@ -22,6 +22,9 @@
     <string name="inputUserNamePass">Input UserName Or Password</string>
     <string name="lb_changeyourpass">Change Your PassWord</string>
 
+    //change profile
+    <string name="lb_editProfile">Edit Profile</string>
+
     //category
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>

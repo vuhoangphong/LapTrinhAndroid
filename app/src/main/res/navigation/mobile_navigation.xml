@@ -18,6 +18,12 @@
         tools:layout="@layout/category_fragment" />
 
     <fragment
+        android:id="@+id/nav_EDProfile"
+        android:name="com.example.noteapplication.ui.profile.profile"
+        android:label="@string/menu_editAcc"
+        tools:layout="@layout/profile_fragment" />
+
+    <fragment
         android:id="@+id/nav_note"
         android:name="com.example.noteapplication.ui.note.note"
         android:label="@string/menu_note"

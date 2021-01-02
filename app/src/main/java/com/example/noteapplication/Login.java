@@ -29,14 +29,22 @@ public class Login extends AppCompatActivity{
         EditText etPass = (EditText) findViewById(R.id.editTextPassWord);
 
         Button button = (Button) findViewById(R.id.buttonLogin);
+        Button btnSignUp = (Button) findViewById(R.id.btnSignUp);
 
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                
+                Login_DB acc= new Login_DB(Login.this);
+                Cursor c= acc.getData(etUserName.getText().toString(),etPass.getText().toString());
+                String userName_Return =  c.getString(c.getColumnIndex("Email"));
+                String userPass_Return =  c.getString(c.getColumnIndex("Pass"));
+                if (!c.isClosed()) {
+                    c.close();
+                }
+
                 // Perform action on click
                 if(etUserName.getText().toString().length()>0&&etPass.getText().toString().length()>0){
 
-                    if(etUserName.getText().toString().equals("admin")&&etPass.getText().toString().equals("admin")){
+                    if(userName_Return.equals(etUserName.getText().toString())&&userPass_Return.equals(etPass.getText().toString())){
                         Intent intent = new Intent(Login.this,MainActivity.class);
                         startActivity(intent);
                     }else {
@@ -46,7 +54,11 @@ public class Login extends AppCompatActivity{
                     Toast.makeText(Login.this,R.string.inputUserNamePass,Toast.LENGTH_LONG).show();
             }
         }});
-
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent= new Intent(getApplicationContext(),SignUp.class);
+                startActivity(intent);
+            }});
 
     }
     class Login_DB extends DBHelper{
@@ -57,7 +69,7 @@ public class Login extends AppCompatActivity{
 
 
         public Cursor getData(String userName,String passWord){
-            SQLiteDatabase db=this.getWritableDatabase();
+            SQLiteDatabase db=this.getReadableDatabase();
             Cursor res=db.rawQuery("Select * from Account where Email = " + userName + " and Password = "+ passWord +"", null);
             return res;
         }

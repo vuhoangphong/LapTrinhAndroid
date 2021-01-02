@@ -44,7 +44,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.execSQL(
                 "create table " + PRIORITY +
-                        "("+PRIORITY_COLUMN_ID+ "integer primary key autoincrement," +PRIORITY_COLUMN_NAME + "text," + PRIORITY_COLUMN_CREATEDATE+ " datetime )"
+                        "("+PRIORITY_COLUMN_ID+ " integer primary key autoincrement," + PRIORITY_COLUMN_NAME + " text, " + PRIORITY_COLUMN_CREATEDATE+ " datetime )"
         );
     }
 
@@ -102,7 +102,7 @@ public class DBHelper extends SQLiteOpenHelper {
         if(cursor.moveToFirst()){
             do {
                 int priorityId = cursor.getInt(0);
-                String priorityName = cursor.getString(cursor.getColumnIndex("Name"));
+                String priorityName = cursor.getString(1);
                 String priorityDatetime = cursor.getString(2);
                 PriorityOJ newPriority = new PriorityOJ(priorityId,priorityName,priorityDatetime);
                 listPri.add(newPriority);

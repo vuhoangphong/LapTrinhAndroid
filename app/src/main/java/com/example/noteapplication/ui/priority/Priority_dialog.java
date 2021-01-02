@@ -53,13 +53,13 @@ public class Priority_dialog extends DialogFragment {
                      }
                     /*EditText txt =  (EditText)view.findViewById(R.id.inputPriority);
                     String priority= txt.getText().toString() ;
-                    String date = java.text.DateFormat.getDateTimeInstance().format(new Date());*/
+                    String date = java.text.DateFormat.getDateTimeInstance().format(new Date());
+                    dialogAddPriorityListener.applyAdd(priority,date);*/
                     dialogAddPriorityListener.applyAdd("","");
                     DBHelper dbHelper = new DBHelper(Priority_dialog.this.getContext());
                     boolean success = dbHelper.addPriority(priorityOJ);
 
-                    //Toast.makeText(Priority_dialog.this.getContext(),"Success" + success,Toast.LENGTH_SHORT).show();
-
+                    Toast.makeText(Priority_dialog.this.getContext(),"Success" + success,Toast.LENGTH_SHORT).show();
                 }
             });
         }

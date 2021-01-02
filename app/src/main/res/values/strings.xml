@@ -30,8 +30,37 @@
     <string name="register">Register</string>
 
     //note
-    <string-array name="list">
-        <item></item>
+    <string-array name="category">
+        <item name="abc">
+            abc
+        </item>
+        <item name="bcd">
+            bcd
+        </item>
+        <item name="dbc">
+            dbc
+        </item>
     </string-array>
-
+    <string-array name="status">
+        <item name="ABC">
+            ABC
+        </item>
+        <item name="BCD">
+            BCD
+        </item>
+        <item name="DBC">
+            DBC
+        </item>
+    </string-array>
+    <string-array name="priority">
+        <item name="WSD">
+            WSD
+        </item>
+        <item name="DSW">
+            DSW
+        </item>
+        <item name="SDW">
+            SDW
+        </item>
+    </string-array>
 </resources>

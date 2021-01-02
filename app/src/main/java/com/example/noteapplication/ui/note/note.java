@@ -60,7 +60,6 @@ public class note extends Fragment implements note_dialog.dialog_Add_Note_Listen
             public void onClick(View v) {
 
                 openDialog();
-
             }
         });
 
@@ -104,8 +103,8 @@ public class note extends Fragment implements note_dialog.dialog_Add_Note_Listen
         listNote.add(s);
         adapter = new com.example.noteapplication.ui.note.note.NoteAdapter() ;
         listView.setAdapter(adapter);
-
     }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

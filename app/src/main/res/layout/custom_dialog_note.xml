@@ -27,9 +27,9 @@
         android:layout_height="35dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="151dp"
+        android:layout_marginTop="148dp"
         android:layout_marginRight="0dp"
-        android:entries="@array/list"
+        android:entries="@array/priority"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="95dp"
         tools:layout_editor_absoluteY="45dp" />
@@ -72,7 +72,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginTop="94dp"
         android:layout_marginRight="0dp"
-        android:entries="@array/list"
+        android:entries="@array/status"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="105dp"
         tools:layout_editor_absoluteY="77dp" />
@@ -100,7 +100,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginTop="45dp"
         android:layout_marginRight="0dp"
-        android:entries="@array/list"
+        android:entries="@array/category"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="105dp"
         tools:layout_editor_absoluteY="109dp" />

@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -21,9 +22,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.noteapplication.R;
+import com.example.noteapplication.ui.category.CategoryOJ;
+import com.example.noteapplication.ui.priority.PriorityOJ;
+import com.example.noteapplication.ui.status.StatusViewModel;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class Note_dialog extends DialogFragment {
     Button btn;
@@ -43,6 +49,12 @@ public class Note_dialog extends DialogFragment {
         category =  view.findViewById(R.id.select_category);
         priority =  view.findViewById(R.id.select_priority);
         status =  view.findViewById(R.id.select_status);
+
+        addDataSpinnerCategory(view);
+        addDataSpinnerStatus(view);
+        addDataSpinnerPriority(view);
+
+
 
 
         btn = view.findViewById(R.id.open_calendar);
@@ -103,6 +115,52 @@ public class Note_dialog extends DialogFragment {
         super.onAttach(context);
         note_dialog_listen = (Note_dialog_listen) getParentFragment();
     }
+
+    private void addDataSpinnerCategory(View view){
+        note_DB note_db = new note_DB(Note_dialog.this.getContext());
+        List<CategoryOJ> categories = note_db.getSpinnerCategory();
+        List<String> nameCategori = new ArrayList<>();
+        for (CategoryOJ cate:categories) {
+            nameCategori.add(cate.getName());
+        }
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item, nameCategori);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Spinner spinnerCategory = view.findViewById(R.id.select_category);
+        spinnerCategory.setAdapter(dataAdapter);
+
+    }
+
+    private void addDataSpinnerPriority(View view){
+        note_DB note_db = new note_DB(Note_dialog.this.getContext());
+        List<PriorityOJ> priorityOJS = note_db.getSpinnerPriority();
+        List<String> namePriority = new ArrayList<>();
+        for (PriorityOJ cate:priorityOJS) {
+            namePriority.add(cate.getName());
+        }
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item, namePriority);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Spinner spinnerPriority = view.findViewById(R.id.select_priority);
+        spinnerPriority.setAdapter(dataAdapter);
+
+    }
+
+    private void addDataSpinnerStatus(View view){
+        note_DB note_db = new note_DB(Note_dialog.this.getContext());
+        List<StatusViewModel> lstStatus = note_db.getSpinnerStatus();
+        List<String> nameStatus = new ArrayList<>();
+        for (StatusViewModel cate:lstStatus) {
+            nameStatus.add(cate.getName());
+        }
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item, nameStatus);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Spinner spinnerStatus = view.findViewById(R.id.select_status);
+        spinnerStatus.setAdapter(dataAdapter);
+
+    }
+
+
+
+
 
     public interface Note_dialog_listen{
        void addNote(noteOJ noteOJ);

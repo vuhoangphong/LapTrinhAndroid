@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -56,6 +57,14 @@ public class note extends Fragment implements note_dialog.dialog_Add_Note_Listen
         View view = inflater.inflate(R.layout.note_fragment,container,false);
         FloatingActionButton myFab = view.findViewById(R.id.btnNote);
         listView = view.findViewById(R.id.lvNote);
+        CalendarView calendarViewPlandate = (CalendarView)plandateView.findViewById(R.id.calendarView_note);
+        calendarViewPlandate.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int dayofMonth) {
+                String date = year+"/"+(month+1)+"/"+dayofMonth;
+                textViewPlandate.setText(date);
+            }
+        });
         myFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 

@@ -29,4 +29,9 @@
     <string name="add">add</string>
     <string name="register">Register</string>
 
+    //note
+    <string-array name="list">
+        <item></item>
+    </string-array>
+
 </resources>

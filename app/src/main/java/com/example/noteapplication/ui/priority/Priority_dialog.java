@@ -56,7 +56,7 @@ public class Priority_dialog extends DialogFragment {
                     String date = java.text.DateFormat.getDateTimeInstance().format(new Date());
                     dialogAddPriorityListener.applyAdd(priority,date);*/
 
-                    DBHelper dbHelper = new DBHelper(Priority_dialog.this.getContext());
+                    priority_DB dbHelper = new priority_DB(Priority_dialog.this.getContext());
                     boolean success = dbHelper.addPriority(priorityOJ);
                     dialogAddPriorityListener.applyAdd("","");
                     Toast.makeText(Priority_dialog.this.getContext(),"Success" + success,Toast.LENGTH_SHORT).show();

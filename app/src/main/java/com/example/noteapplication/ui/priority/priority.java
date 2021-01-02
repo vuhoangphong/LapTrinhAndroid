@@ -74,7 +74,7 @@ public class priority extends Fragment implements Priority_dialog.dialog_Add_Pri
     }
 
     public void SelectDB(){
-        DBHelper dbHelper = new DBHelper(priority.this.getContext());
+        priority_DB dbHelper = new priority_DB(priority.this.getContext());
         listPriority = dbHelper.priorityOJList();
         PriorityAdapter priorityArrayAdapter = new PriorityAdapter();
         listView.setAdapter(priorityArrayAdapter);

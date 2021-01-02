@@ -31,19 +31,19 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(
-                "CREATE TABLE " + TABLE_ACCOUNT + " ( ID    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, FirstName    TEXT, LastName    TEXT, Email    TEXT, Password    TEXT )"
+                "CREATE TABLE " + TABLE_ACCOUNT + " ( ID    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, FirstName    TEXT, LastName    TEXT, Email    TEXT UNIQUE, Password    TEXT )"
         );
         db.execSQL(
-                "CREATE TABLE " + TABLE_CATEGORY + " ( ID    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, NameCategory    TEXT, DateCate    TEXT)"
+                "CREATE TABLE " + TABLE_CATEGORY + " ( ID    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, NameCategory    TEXT UNIQUE, DateCate    TEXT)"
         );
         db.execSQL(
                 "CREATE TABLE " + TABLE_NOTE + " ( ID    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Priority    INTEGER, Category    INTEGER, Status    INTEGER, Content    TEXT, DateCreate    TEXT, FOREIGN KEY(Priority) REFERENCES Priority (ID), FOREIGN KEY(Status) REFERENCES Status(ID), FOREIGN KEY(Category) REFERENCES Category(ID) )"
         );
         db.execSQL(
-                "CREATE TABLE " + TABLE_PRIORITY + " ( ID    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " + COLUMN_PRIORITY_NAME_PRIORITY + "    TEXT, " + COLUMN_PRIORITY_DATE_PRI + "    TEXT)"
+                "CREATE TABLE " + TABLE_PRIORITY + " ( ID    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " + COLUMN_PRIORITY_NAME_PRIORITY + "    TEXT UNIQUE, " + COLUMN_PRIORITY_DATE_PRI + "    TEXT)"
         );
         db.execSQL(
-                "CREATE TABLE " + TABLE_STATUS + " ( ID    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, NameStatus    TEXT, DateSta    TEXT)"
+                "CREATE TABLE " + TABLE_STATUS + " ( ID    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, NameStatus    TEXT UNIQUE, DateSta    TEXT)"
         );
 
     }

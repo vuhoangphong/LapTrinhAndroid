@@ -24,6 +24,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.noteapplication.R;
+import com.example.noteapplication.ui.priority.priority;
+import com.example.noteapplication.ui.priority.priority_DB;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -66,7 +68,7 @@ public class category extends Fragment  implements Category_dialog.dialog_Add_Ca
                 return false;
             }
         });
-
+        refreshData();
       return v;
     }
 
@@ -83,24 +85,19 @@ public class category extends Fragment  implements Category_dialog.dialog_Add_Ca
         dialogAddCategory.show(getChildFragmentManager(),"example dialog");
     }
 
-    // click button add
     @Override
-    public void applyAdd(String category, String date) {
-        CategoryOJ c = new CategoryOJ();
-        c.setName(category);
-        c.setCreatedate(date);
-        listcategory.add(c);
-        adapter = new CategoryAdapter() ;
-        listView.setAdapter(adapter);
-
+    public void getData() {
+        refreshData();
     }
-    // press and hold click edit
-    @Override
-    public void applyEdit(String category, String date) {
-        listcategory.get(index).setName(category);
-        listcategory.get(index).setCreatedate(date);
 
+    public void refreshData(){
+        category_DB categoryDb = new category_DB(category.this.getContext());
+        listcategory = categoryDb.getListCategory();
+        CategoryAdapter categoryAdapter = new CategoryAdapter();
+        listView.setAdapter(categoryAdapter);
     }
+
+
     // adapter
     public class CategoryAdapter extends ArrayAdapter<CategoryOJ>{
         public CategoryAdapter(Context context ,int textViewResourceId){

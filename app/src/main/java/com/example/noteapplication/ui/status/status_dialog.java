@@ -7,21 +7,27 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.noteapplication.R;
 import com.example.noteapplication.ui.category.Category_dialog;
+import com.example.noteapplication.ui.priority.Priority_dialog;
+import com.example.noteapplication.ui.priority.priority_DB;
 
+import java.io.Console;
 import java.util.Date;
 
 public class status_dialog extends DialogFragment {
+
+    public status_dialog.dialog_Add_Status_Listener dialogAddStatusListener ;
     public  interface  dialog_Add_Status_Listener{
         void addStatus(String status, String date);
-
+        void getData();
     }
-    public status_dialog.dialog_Add_Status_Listener dialogAddStatusListener ;
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         androidx.appcompat.app.AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -42,12 +48,16 @@ public class status_dialog extends DialogFragment {
                     String status="Name: "+txt.getText().toString() ;
                     String date = "Created Day: "+java.text.DateFormat.getDateTimeInstance().format(new Date());
                     dialogAddStatusListener.addStatus(status,date);
+                    try {
+                        status_DB dbHelper = new status_DB(status_dialog.this.getContext());
+                        dbHelper.addStatus(new StatusViewModel(-1,txt.getText().toString(),java.text.DateFormat.getDateTimeInstance().format(new Date())));
+                        dialogAddStatusListener.getData();
+                        Toast.makeText(status_dialog.this.getContext(),"Success",Toast.LENGTH_SHORT).show();
+                    }catch (Exception e){
+                        Toast.makeText(status_dialog.this.getContext(),"UnSuccess",Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
-
-
-
-
         return builder.create();
     }
     @Override

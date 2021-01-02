@@ -4,7 +4,7 @@ import android.widget.ArrayAdapter;
 
 import androidx.lifecycle.ViewModel;
 
-public class StatusViewModel extends ViewModel {
+public class StatusViewModel  {
     // TODO: Implement the ViewModel
     private  int id;
     private String name="";
@@ -29,12 +29,21 @@ public class StatusViewModel extends ViewModel {
     }
 
     public StatusViewModel() {
-        
+
     }
 
     public StatusViewModel(int id, String name, String dateTime) {
         this.id = id;
         this.name = name;
         this.datetime = dateTime;
+    }
+
+    @Override
+    public String toString() {
+        return "StatusViewModel{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", datetime='" + datetime + '\'' +
+                '}';
     }
 }

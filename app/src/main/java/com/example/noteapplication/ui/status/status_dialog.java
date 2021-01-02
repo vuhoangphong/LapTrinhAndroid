@@ -39,8 +39,8 @@ public class status_dialog extends DialogFragment {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     EditText txt =  (EditText)view.findViewById(R.id.etStatusDialog);
-                    String status= txt.getText().toString() ;
-                    String date = java.text.DateFormat.getDateTimeInstance().format(new Date());
+                    String status="Name: "+txt.getText().toString() ;
+                    String date = "Created Day: "+java.text.DateFormat.getDateTimeInstance().format(new Date());
                     dialogAddStatusListener.addStatus(status,date);
                 }
             });

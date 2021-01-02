@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 public class StatusViewModel extends ViewModel {
     // TODO: Implement the ViewModel
+    private  int id;
     private String name="";
     private String datetime="";
     public String getName(){
@@ -20,5 +21,20 @@ public class StatusViewModel extends ViewModel {
     public String setDatetime(String datetime){
         return this.datetime = datetime;
     }
+    public int getID(){
+        return this.id;
+    }
+    public int setID(int Id){
+        return this.id = Id;
+    }
 
+    public StatusViewModel() {
+        
+    }
+
+    public StatusViewModel(int id, String name, String dateTime) {
+        this.id = id;
+        this.name = name;
+        this.datetime = dateTime;
+    }
 }

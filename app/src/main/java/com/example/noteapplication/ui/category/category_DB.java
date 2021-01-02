@@ -28,6 +28,28 @@ public class category_DB extends DBHelper {
             return true;
     }
 
+    public boolean  deleteCategory(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        long inserted = db.delete("Category","id = "+id,null);
+        if(inserted == -1 )
+            return false;
+        else
+            return true;
+    }
+
+    public boolean  updateCategory(CategoryOJ categoryOJ){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("NameCategory",categoryOJ.getName());
+        contentValues.put("DateCate",categoryOJ.getCreatedate());
+        contentValues.put("ID",categoryOJ.getId());
+        long inserted = db.update("Category",contentValues,"ID = "+ categoryOJ.getId(),null);
+        if(inserted == -1 )
+            return false;
+        else
+            return true;
+    }
+
     public List<CategoryOJ> getListCategory (){
         List<CategoryOJ> list = new ArrayList<CategoryOJ>();
         String queryString = "SELECT * FROM  Category ORDER BY id DESC";

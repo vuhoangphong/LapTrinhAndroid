@@ -30,8 +30,10 @@ public class Category_dialog extends DialogFragment {
     }
     public   dialog_Add_Category_Listener dialogAddCategoryListener ;
     String name  = "-1";
-    public Category_dialog(String name) {
+    int keyId  ;
+    public Category_dialog(String name,int keyId) {
         this.name= name;
+        this.keyId = keyId;
     }
     public Category_dialog() {
     }
@@ -66,22 +68,26 @@ public class Category_dialog extends DialogFragment {
                 }
             });
         }else { //when click edit
-//            EditText txt =  (EditText)view.findViewById(R.id.input);
-//            txt.setText(name);
-//            builder.setView(view)
-//                    .setTitle("Category Edit").setNegativeButton("close", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//
-//                }
-//            }).setPositiveButton("save", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//                    String category= txt.getText().toString() ;
-//                    String date = java.text.DateFormat.getDateTimeInstance().format(new Date());
-//                    dialogAddCategoryListener.applyEdit(category,date);
-//                }
-//            });
+            EditText txt =  (EditText)view.findViewById(R.id.input);
+            txt.setText(name);
+            builder.setView(view)
+                    .setTitle("Category Edit").setNegativeButton("close", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            }).setPositiveButton("save", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    CategoryOJ categoryOJ = new CategoryOJ();
+                    categoryOJ.setName(txt.getText().toString());
+                    categoryOJ.setCreatedate(java.text.DateFormat.getDateTimeInstance().format(new Date()));
+                    categoryOJ.setId(keyId);
+                    category_DB category_db = new category_DB(Category_dialog.this.getContext());
+                    category_db.updateCategory(categoryOJ);
+                    dialogAddCategoryListener.getData();
+                }
+            });
 
         }
 

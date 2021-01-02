@@ -80,8 +80,8 @@ public class category extends Fragment  implements Category_dialog.dialog_Add_Ca
     }
 
     //open dialog edit when press and hold
-    public  void openDialogEdit(String name){
-        Category_dialog dialogAddCategory = new Category_dialog(name);
+    public  void openDialogEdit(String name , int key){
+        Category_dialog dialogAddCategory = new Category_dialog(name,key);
         dialogAddCategory.show(getChildFragmentManager(),"example dialog");
     }
 
@@ -90,12 +90,16 @@ public class category extends Fragment  implements Category_dialog.dialog_Add_Ca
         refreshData();
     }
 
+
+
     public void refreshData(){
         category_DB categoryDb = new category_DB(category.this.getContext());
         listcategory = categoryDb.getListCategory();
         CategoryAdapter categoryAdapter = new CategoryAdapter();
         listView.setAdapter(categoryAdapter);
     }
+
+
 
 
     // adapter
@@ -136,12 +140,12 @@ public class category extends Fragment  implements Category_dialog.dialog_Add_Ca
     public boolean onMenuItemClick(MenuItem item) {
         switch(item.getItemId()){
             case R.id.edit:
-                openDialogEdit(listcategory.get(index).getName());
-                adapter.notifyDataSetChanged();
+                openDialogEdit(listcategory.get(index).getName(),listcategory.get(index).getId());
                 return  true;
             case R.id.delete:
-                listcategory.remove(index);
-                adapter.notifyDataSetChanged();
+                category_DB category_db = new category_DB(category.this.getContext());
+                category_db.deleteCategory(listcategory.get(index).getId());
+                getData();
                 return  true;
             default:
                 return false;

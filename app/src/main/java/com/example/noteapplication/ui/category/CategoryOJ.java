@@ -6,11 +6,14 @@ public class CategoryOJ {
     String name;
     String Createdate;
     int id ;
-    public  CategoryOJ(int id ,String name,String Createdate){
+
+
+    public  CategoryOJ(int id , String name, String Createdate){
         this.name = name;
         this.Createdate = Createdate;
         this.id=id;
     }
+    public CategoryOJ(){};
 
     public int getId() {
         return id;

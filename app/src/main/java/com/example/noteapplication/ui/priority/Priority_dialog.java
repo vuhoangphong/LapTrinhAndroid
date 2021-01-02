@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.noteapplication.DBHelper;
 import com.example.noteapplication.R;
 import com.example.noteapplication.ui.category.Category_dialog;
 
@@ -19,6 +21,7 @@ import java.util.Date;
 public class Priority_dialog extends DialogFragment {
     public dialog_Add_Priority_Listener dialogAddPriorityListener ;
     String name  = "-1";
+    EditText txt;
     public Priority_dialog(String name) {
         this.name= name;
     }
@@ -29,7 +32,7 @@ public class Priority_dialog extends DialogFragment {
         androidx.appcompat.app.AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.priority_form_fragment,null);
-
+        txt = (EditText)view.findViewById(R.id.inputPriority);
         if(name.equals("-1")){  // when click add
             builder.setView(view)
                     .setTitle("Priority From").setNegativeButton("close", new DialogInterface.OnClickListener() {
@@ -38,12 +41,25 @@ public class Priority_dialog extends DialogFragment {
 
                 }
             }).setPositiveButton("add", new DialogInterface.OnClickListener() {
-                @Override
+                                @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    EditText txt =  (EditText)view.findViewById(R.id.inputPriority);
+                     PriorityOJ priorityOJ = null;
+                     String date = java.text.DateFormat.getDateTimeInstance().format(new Date());
+                     try {
+                         priorityOJ = new PriorityOJ(-1,txt.getText().toString(),date);
+                         Toast.makeText(Priority_dialog.this.getContext(),priorityOJ.toString(),Toast.LENGTH_SHORT).show();
+                     }catch (Exception e){
+                        Toast.makeText(Priority_dialog.this.getContext(),"error insert",Toast.LENGTH_SHORT).show();
+                     }
+                    /*EditText txt =  (EditText)view.findViewById(R.id.inputPriority);
                     String priority= txt.getText().toString() ;
-                    String date = java.text.DateFormat.getDateTimeInstance().format(new Date());
-                    dialogAddPriorityListener.applyAdd(priority,date);
+                    String date = java.text.DateFormat.getDateTimeInstance().format(new Date());*/
+                    dialogAddPriorityListener.applyAdd("","");
+                    DBHelper dbHelper = new DBHelper(Priority_dialog.this.getContext());
+                    boolean success = dbHelper.addPriority(priorityOJ);
+
+                    //Toast.makeText(Priority_dialog.this.getContext(),"Success" + success,Toast.LENGTH_SHORT).show();
+
                 }
             });
         }

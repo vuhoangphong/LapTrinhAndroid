@@ -1,11 +1,8 @@
 package com.example.noteapplication.ui.priority;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,25 +12,16 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.noteapplication.MainActivity;
+import com.example.noteapplication.DBHelper;
 import com.example.noteapplication.R;
-import com.example.noteapplication.ui.category.CategoryOJ;
-import com.example.noteapplication.ui.category.CategoryViewModel;
-import com.example.noteapplication.ui.category.Category_dialog;
-import com.example.noteapplication.ui.category.category;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class priority extends Fragment implements Priority_dialog.dialog_Add_Priority_Listener{
@@ -75,13 +63,21 @@ public class priority extends Fragment implements Priority_dialog.dialog_Add_Pri
 
     @Override
     public void applyAdd(String priority, String date) {
-        PriorityOJ p = new PriorityOJ();
+        /*PriorityOJ p = new PriorityOJ();
         p.setName(priority);
-        p.setCreatedate(date);
+        p.setCreateDate(date);
         listPriority.add(p);
         adapter = new PriorityAdapter() ;
-        listView.setAdapter(adapter);
+        listView.setAdapter(adapter);*/
+        SelectDB();
 
+    }
+
+    public void SelectDB(){
+        DBHelper dbHelper = new DBHelper(priority.this.getContext());
+        listPriority = dbHelper.priorityOJList();
+        PriorityAdapter priorityArrayAdapter = new PriorityAdapter();
+        listView.setAdapter(priorityArrayAdapter);
     }
 
     public class PriorityAdapter extends ArrayAdapter<PriorityOJ>{
@@ -102,7 +98,7 @@ public class priority extends Fragment implements Priority_dialog.dialog_Add_Pri
             }
             PriorityOJ p = listPriority.get(position);
             ((TextView)row.findViewById(R.id.name)).setText(p.getName());
-            ((TextView)row.findViewById(R.id.date)).setText(p.getCreatedate());
+            ((TextView)row.findViewById(R.id.date)).setText(p.getCreateDate());
             return row;
         }
     }

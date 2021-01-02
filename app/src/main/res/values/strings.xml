@@ -29,4 +29,22 @@
     <string name="add">add</string>
     <string name="register">Register</string>
 
+    //note
+    <string-array name="category">
+        <item name="Working">Working</item>
+        <item name="Relax">Relax</item>
+        <item name="Study">Study</item>
+    </string-array>
+
+    <string-array name="priority">
+        <item name="High">High</item>
+        <item name="Medium">Medium</item>
+        <item name="Low">Low</item>
+    </string-array>
+    <string-array name="status">
+        <item name="Pending">Pending</item>
+        <item name="Processing">Processing</item>
+        <item name="Done">Done</item>
+    </string-array>
+
 </resources>

@@ -90,13 +90,18 @@ public class Login extends AppCompatActivity{
                 EditText et1 = (EditText) findViewById(R.id.editTextUserName);
                 EditText et2 = (EditText) findViewById(R.id.editTextPassWord);
                 if(buttonView.isChecked()){
-                    SharedPreferences preferences = getSharedPreferences("checkbox",MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("remember","true");
-                    editor.putString("UserName",et1.getText().toString());
-                    editor.putString("Pass",et2.getText().toString());
-                    editor.apply();
-                    Toast.makeText(Login.this,"Remember",Toast.LENGTH_LONG).show();
+                    if(et1.getText().length()>0&&et2.getText().length()>0){
+                        SharedPreferences preferences = getSharedPreferences("checkbox",MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("remember","true");
+                        editor.putString("UserName",et1.getText().toString());
+                        editor.putString("Pass",et2.getText().toString());
+                        editor.apply();
+                        Toast.makeText(Login.this,"Remember",Toast.LENGTH_LONG).show();
+                    }else {
+                        buttonView.setChecked(false);
+                        Toast.makeText(Login.this,R.string.insert_full,Toast.LENGTH_LONG).show();
+                    }
                 }else {
                     SharedPreferences preferences = getSharedPreferences("checkbox",MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
@@ -171,7 +176,7 @@ public class Login extends AppCompatActivity{
                 if(acc_App == true){
                     AccInfo = new Login_DB(Login.this).getAccInfo(account.getEmail(),account.getEmail());
                     Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                   
+
                     startActivity(intent);
                 }else {
                     boolean signUp =new SignUp_DB(Login.this).addAcc(account.getGivenName(),account.getFamilyName(),account.getEmail(),account.getEmail());

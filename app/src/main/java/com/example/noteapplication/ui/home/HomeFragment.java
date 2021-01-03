@@ -47,29 +47,39 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
         });
 
 
-
         mChart = (PieChart) root.findViewById(R.id.piechart);
         mChart.setRotationEnabled(true);
         mChart.setDescription(new Description());
-        mChart.setHoleRadius(35f);
+        mChart.setHoleRadius(0f);
         mChart.setTransparentCircleAlpha(0);
-        mChart.setCenterText("PieChart");
         mChart.setCenterTextSize(10);
         mChart.setDrawEntryLabels(true);
 
-        addDataSet(mChart);
+        addDataSet(mChart,root);
 
         mChart.setOnChartValueSelectedListener(this);
 
         return root;
     }
 
-    private static void addDataSet(PieChart pieChart) {
+    private static void addDataSet(PieChart pieChart,View view) {
         ArrayList<PieEntry> yEntrys = new ArrayList<>();
         ArrayList<String> xEntrys = new ArrayList<>();
-        float[] yData = { 25, 40, 70 };
-        String[] xData = { "January", "February", "January" };
 
+        home_DB home_db = new home_DB(view.getContext());
+        int done = home_db.countSatatus("done");
+        int pending = home_db.countSatatus("pending");
+        int processing = home_db.countSatatus("processing");
+        int sum = (done+pending+processing);
+       try {
+           done = (done/sum)*100;
+           pending = (pending/sum)*100;
+           processing = (processing/sum)*100;
+       }catch (Exception e){
+       }
+
+        float[] yData = { done, pending, processing };
+        String[] xData = { "January", "February", "January" };
         for (int i = 0; i < yData.length;i++){
             yEntrys.add(new PieEntry(yData[i],i));
         }
@@ -77,13 +87,13 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
             xEntrys.add(xData[i]);
         }
 
-        PieDataSet pieDataSet=new PieDataSet(yEntrys,"Employee Sales");
+        PieDataSet pieDataSet=new PieDataSet(yEntrys,"");
         pieDataSet.setSliceSpace(2);
         pieDataSet.setValueTextSize(12);
 
         ArrayList<Integer> colors=new ArrayList<>();
-        colors.add(Color.GRAY);
-        colors.add(Color.BLUE);
+        colors.add(Color.YELLOW);
+        colors.add(Color.GREEN);
         colors.add(Color.RED);
 
         pieDataSet.setColors(colors);
@@ -99,12 +109,12 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
 
     @Override
     public void onValueSelected(Entry e, Highlight h) {
-        Toast.makeText(getContext(), "Value: "
-                + e.getY()
-                + ", index: "
-                + h.getX()
-                + ", DataSet index: "
-                + h.getDataSetIndex(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "Value: "
+//                + e.getY()
+//                + ", index: "
+//                + h.getX()
+//                + ", DataSet index: "
+//                + h.getDataSetIndex(), Toast.LENGTH_SHORT).show();
     }
 
     @Override

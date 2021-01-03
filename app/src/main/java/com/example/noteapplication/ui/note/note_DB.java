@@ -76,7 +76,7 @@ public class note_DB extends DBHelper {
 
     public List<PriorityOJ> getSpinnerPriority (){
         List<PriorityOJ> listPri = new ArrayList<PriorityOJ>();
-        String queryString = "SELECT * FROM " + TABLE_PRIORITY +" Where IDAcc = "+ AccInfo.getId();
+        String queryString = "SELECT * FROM " + TABLE_PRIORITY + " WHERE IDAcc = " + AccInfo.getId();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(queryString,null);
         if(cursor.moveToFirst()){

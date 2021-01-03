@@ -15,6 +15,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,6 +24,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.noteapplication.R;
 import com.example.noteapplication.ui.category.CategoryOJ;
+import com.example.noteapplication.ui.category.Category_dialog;
 import com.example.noteapplication.ui.priority.PriorityOJ;
 import com.example.noteapplication.ui.status.StatusViewModel;
 
@@ -104,7 +106,13 @@ public class Note_dialog extends DialogFragment {
                             txt.getText().toString(),
                             date
                     );
-                    note_dialog_listen.addNote(noteOJ);
+                    note_DB note_db = new note_DB(getContext());
+                   try {
+                       note_db.insetCategory(noteOJ);
+                       note_dialog_listen.getData();
+                   }catch (Exception e){
+                       Toast.makeText(getContext(),"error insert",Toast.LENGTH_SHORT).show();
+                   }
                 }
             });
         return builder.create();
@@ -163,7 +171,7 @@ public class Note_dialog extends DialogFragment {
 
 
     public interface Note_dialog_listen{
-       void addNote(noteOJ noteOJ);
+       void getData();
     }
 }
 

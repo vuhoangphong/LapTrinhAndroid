@@ -21,6 +21,7 @@ import com.example.noteapplication.R;
 import com.example.noteapplication.ui.category.CategoryOJ;
 import com.example.noteapplication.ui.category.Category_dialog;
 import com.example.noteapplication.ui.category.category;
+import com.example.noteapplication.ui.category.category_DB;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ public class note extends Fragment implements Note_dialog.Note_dialog_listen{
         View v = inflater.inflate(R.layout.note_fragment, container, false);
         FloatingActionButton btn = v.findViewById(R.id.addNote);
         listView =v.findViewById(R.id.listnote);
+        refreshDate();
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,10 +68,16 @@ public class note extends Fragment implements Note_dialog.Note_dialog_listen{
     }
 
     @Override
-    public void addNote(noteOJ noteOJ) {
-        noteOJList.add(noteOJ);
-        adapter = new noteAdapter();
-        listView.setAdapter(adapter);
+    public void getData() {
+        refreshDate();
+    }
+
+
+    private void refreshDate(){
+        note_DB note_DB = new note_DB(getContext());
+        noteOJList = note_DB.getNote();
+        noteAdapter noteAdapter = new noteAdapter();
+        listView.setAdapter(noteAdapter);
     }
     // adapter
     public class noteAdapter extends ArrayAdapter<noteOJ> {

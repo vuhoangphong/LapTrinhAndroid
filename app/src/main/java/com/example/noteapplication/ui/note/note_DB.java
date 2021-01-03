@@ -34,6 +34,23 @@ public class note_DB extends DBHelper {
             return true;
     }
 
+    public List<noteOJ> getNote (){
+        List<noteOJ> list = new ArrayList<noteOJ>();
+        String queryString = "SELECT * FROM  Note ORDER BY id DESC";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString,null);
+        if(cursor.moveToFirst()){
+            do {
+                noteOJ  noteOJ = new noteOJ(cursor.getString(4),cursor.getString(2),cursor.getString(1),cursor.getString(3),cursor.getString(6),cursor.getString(5));
+                list.add(noteOJ);
+            }while (cursor.moveToNext());
+        }else{}
+        cursor.close();
+        db.close();
+        return list;
+    }
+
+
     public List<CategoryOJ> getSpinnerCategory (){
         List<CategoryOJ> list = new ArrayList<CategoryOJ>();
         String queryString = "SELECT * FROM  Category ORDER BY id DESC";

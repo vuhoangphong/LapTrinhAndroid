@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.view.Window;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -44,7 +46,16 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+        ViewNameMenu();
+    }
 
+    public  void ViewNameMenu(){
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.tvMenu_Name);
+        TextView navEmail = (TextView) headerView.findViewById(R.id.tvMenu_Email);
+        navEmail.setText(Login.AccInfo.getEmail());
+        navUsername.setText(Login.AccInfo.getFirstName() + " "+Login.AccInfo.getLastName());
     }
 
     @Override

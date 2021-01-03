@@ -5,12 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.noteapplication.ui.Account_Model;
@@ -21,19 +26,28 @@ import java.util.List;
 
 public class Login extends AppCompatActivity{
     public static Account_Model AccInfo = null;
-
+    CheckBox remember;
+    EditText etUserName,etPass;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        EditText etUserName = (EditText) findViewById(R.id.editTextUserName);
-        EditText etPass = (EditText) findViewById(R.id.editTextPassWord);
+        etUserName = (EditText) findViewById(R.id.editTextUserName);
+        etPass = (EditText) findViewById(R.id.editTextPassWord);
+        remember = findViewById(R.id.remember_me);
 
         Button button = (Button) findViewById(R.id.buttonLogin);
         Button btnSignUp = (Button) findViewById(R.id.btnSignUp);
-
+        SharedPreferences preferences = getSharedPreferences("checkbox",MODE_PRIVATE);
+        String checkbox = preferences.getString("remember","");
+        if(checkbox.equals("true")){
+            Intent intent = new Intent(Login.this,MainActivity.class);
+            startActivity(intent);
+        }else {
+            Toast.makeText(Login.this,"Please Sign In",Toast.LENGTH_LONG).show();
+        }
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Login_DB acc= new Login_DB(Login.this);
@@ -54,6 +68,24 @@ public class Login extends AppCompatActivity{
                     Toast.makeText(Login.this,R.string.inputUserNamePass,Toast.LENGTH_LONG).show();
             }
         }});
+        remember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(buttonView.isChecked()){
+                    SharedPreferences preferences = getSharedPreferences("checkbox",MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("remember","true");
+                    editor.apply();
+                    Toast.makeText(Login.this,"Remember",Toast.LENGTH_LONG).show();
+                }else {
+                    SharedPreferences preferences = getSharedPreferences("checkbox",MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("remember","false");
+                    editor.apply();
+
+                }
+            }
+        });
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent= new Intent(getApplicationContext(),SignUp.class);
@@ -61,6 +93,7 @@ public class Login extends AppCompatActivity{
             }});
 
     }
+
     class Login_DB extends DBHelper{
         public Login_DB(Context context) {
             super(context);

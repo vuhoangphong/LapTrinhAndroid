@@ -10,7 +10,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.noteapplication.ui.Account_Model;
@@ -32,6 +34,7 @@ public class SignUp extends AppCompatActivity {
         EditText pass= (EditText)findViewById(R.id.etPassword);
         EditText confirm_Pass= (EditText)findViewById(R.id.etConfirmPass);
         FloatingActionButton btnAddAcc = (FloatingActionButton)findViewById(R.id.btnAddAcc);
+        TextView tv= findViewById(R.id.textView3);
         btnAddAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,6 +57,13 @@ public class SignUp extends AppCompatActivity {
                 }catch (Exception e){
                     Toast.makeText(getApplicationContext(),"UnSuccess",Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignUp.this,Login.class);
+                startActivity(intent);
             }
         });
     }

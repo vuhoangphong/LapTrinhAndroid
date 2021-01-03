@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.noteapplication.DBHelper;
+import com.example.noteapplication.Login;
 import com.example.noteapplication.R;
 import com.example.noteapplication.ui.category.Category_dialog;
 
@@ -60,7 +61,7 @@ public class Priority_dialog extends DialogFragment {
                     priority_DB dbHelper = new priority_DB(Priority_dialog.this.getContext());
                     boolean success = dbHelper.addPriority(priorityOJ);
                     dialogAddPriorityListener.getData();
-                    Toast.makeText(Priority_dialog.this.getContext(),"Success" + success,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Priority_dialog.this.getContext(),"Success = " + success,Toast.LENGTH_SHORT).show();
                 }
             });
         }

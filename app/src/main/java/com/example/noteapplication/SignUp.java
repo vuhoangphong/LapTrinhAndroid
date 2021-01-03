@@ -13,8 +13,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.noteapplication.ui.Account_Model;
 import com.example.noteapplication.ui.status.StatusViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SignUp extends AppCompatActivity {
 
@@ -31,6 +35,7 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
+
                     new SignUp_DB(getApplicationContext()).addAcc(fName.getText().toString(),lName.getText().toString(),email.getText().toString(),pass.getText().toString());
                     Toast.makeText(getApplicationContext(),"Create Success",Toast.LENGTH_LONG).show();
                     Intent intent=new Intent(SignUp.this,MainActivity.class);
@@ -50,6 +55,7 @@ class SignUp_DB extends DBHelper{
     public SignUp_DB(Context context) {
         super(context);
     }
+
 
 
 

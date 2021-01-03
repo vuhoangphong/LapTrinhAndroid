@@ -13,15 +13,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.noteapplication.ui.Account_Model;
 import com.example.noteapplication.ui.status.StatusViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Login extends AppCompatActivity{
+    public static Account_Model AccInfo = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -36,9 +39,12 @@ public class Login extends AppCompatActivity{
                 Login_DB acc= new Login_DB(Login.this);
                 Boolean c= acc.getData(etUserName.getText().toString(),etPass.getText().toString());
 
+
                 if(etUserName.getText().toString().length()>0&&etPass.getText().toString().length()>0){
 
                     if(c == true){
+                        AccInfo = acc.getAccInfo(etUserName.getText().toString(),etPass.getText().toString());
+
                         Intent intent = new Intent(Login.this,MainActivity.class);
                         startActivity(intent);
                     }else {
@@ -60,6 +66,26 @@ public class Login extends AppCompatActivity{
             super(context);
         }
 
+        public Account_Model getAccInfo (String userName,String passWord){
+            Account_Model acc= new Account_Model();
+            SQLiteDatabase db=this.getReadableDatabase();
+            Cursor c=db.rawQuery("Select * from Account where Email = ? and Password = ?", new String[]{userName,passWord});
+            int Id = c.getColumnIndex("ID");
+            int fName = c.getColumnIndex("FirstName");
+            int lName = c.getColumnIndex("LastName");
+            int email = c.getColumnIndex("Email");
+            int pass = c.getColumnIndex("Password");
+            if(c.moveToFirst()){
+                    acc.setId(c.getInt(Id));
+                    acc.setFirstName(c.getString(fName));
+                    acc.setLastName(c.getString(lName));
+                    acc.setEmail(c.getString(email));
+                    acc.setPassWord(c.getString(pass));
+
+            }
+            db.close();
+            return acc;
+        }
 
 
         public Boolean getData(String userName,String passWord){

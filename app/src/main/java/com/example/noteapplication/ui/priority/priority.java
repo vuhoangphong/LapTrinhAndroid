@@ -46,6 +46,7 @@ public class priority extends Fragment implements Priority_dialog.dialog_Add_Pri
         View v = inflater.inflate(R.layout.priority_fragment, container, false);
         FloatingActionButton b = v.findViewById(R.id.fabAdd);
         listView = v.findViewById(R.id.lvPriority);
+        refreshDB();
         b.setOnClickListener(new View.OnClickListener() {  // button click
             @Override
             public void onClick(View v) {
@@ -61,19 +62,21 @@ public class priority extends Fragment implements Priority_dialog.dialog_Add_Pri
         dialogAddPriority.show(getChildFragmentManager(),"example dialog");
     }
 
-    @Override
+    /*@Override
     public void applyAdd(String priority, String date) {
-        /*PriorityOJ p = new PriorityOJ();
+        PriorityOJ p = new PriorityOJ();
         p.setName(priority);
         p.setCreateDate(date);
         listPriority.add(p);
         adapter = new PriorityAdapter() ;
-        listView.setAdapter(adapter);*/
-        SelectDB();
-
+        listView.setAdapter(adapter);
+    }*/
+    @Override
+    public void getData() {
+        refreshDB();
     }
 
-    public void SelectDB(){
+    public void refreshDB(){
         priority_DB dbHelper = new priority_DB(priority.this.getContext());
         listPriority = dbHelper.priorityOJList();
         PriorityAdapter priorityArrayAdapter = new PriorityAdapter();

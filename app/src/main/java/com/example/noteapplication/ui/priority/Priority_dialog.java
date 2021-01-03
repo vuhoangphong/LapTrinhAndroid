@@ -47,6 +47,7 @@ public class Priority_dialog extends DialogFragment {
                      String date = java.text.DateFormat.getDateTimeInstance().format(new Date());
                      try {
                          priorityOJ = new PriorityOJ(-1,txt.getText().toString(),date);
+
                          Toast.makeText(Priority_dialog.this.getContext(),priorityOJ.toString(),Toast.LENGTH_SHORT).show();
                      }catch (Exception e){
                         Toast.makeText(Priority_dialog.this.getContext(),"error insert",Toast.LENGTH_SHORT).show();
@@ -58,7 +59,7 @@ public class Priority_dialog extends DialogFragment {
 
                     priority_DB dbHelper = new priority_DB(Priority_dialog.this.getContext());
                     boolean success = dbHelper.addPriority(priorityOJ);
-                    dialogAddPriorityListener.applyAdd("","");
+                    dialogAddPriorityListener.getData();
                     Toast.makeText(Priority_dialog.this.getContext(),"Success" + success,Toast.LENGTH_SHORT).show();
                 }
             });
@@ -72,6 +73,7 @@ public class Priority_dialog extends DialogFragment {
     }
 
     public interface dialog_Add_Priority_Listener {
-        void applyAdd(String priority, String date);
+        //void applyAdd(String priority, String date);
+        void getData();
     }
 }

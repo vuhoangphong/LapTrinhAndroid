@@ -34,16 +34,16 @@ public class DBHelper extends SQLiteOpenHelper {
                 "CREATE TABLE " + TABLE_ACCOUNT + " ( ID    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, FirstName    TEXT, LastName    TEXT, Email    TEXT UNIQUE, Password    TEXT )"
         );
         db.execSQL(
-                "CREATE TABLE " + TABLE_CATEGORY + " ( ID    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, NameCategory    TEXT UNIQUE, DateCate    TEXT)"
+                "CREATE TABLE " + TABLE_CATEGORY + " ( ID    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, NameCategory    TEXT, DateCate    TEXT, IDAcc  INTEGER)"
         );
         db.execSQL(
-                "CREATE TABLE " + TABLE_NOTE + " ( ID    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Priority    TEXT, Category    TEXT, Status    TEXT, Content    TEXT, DateCreate    TEXT,PlanDate    TEXT,FOREIGN KEY(Priority) REFERENCES Priority (ID), FOREIGN KEY(Status) REFERENCES Status(ID), FOREIGN KEY(Category) REFERENCES Category(ID) )"
+                "CREATE TABLE " + TABLE_NOTE + " ( ID    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Priority    TEXT, Category    TEXT, Status    TEXT, Content    TEXT, DateCreate    TEXT,PlanDate    TEXT, IDAcc     INTEGER, FOREIGN KEY(Priority) REFERENCES Priority (ID), FOREIGN KEY(Status) REFERENCES Status(ID), FOREIGN KEY(Category) REFERENCES Category(ID) )"
         );
         db.execSQL(
-                "CREATE TABLE " + TABLE_PRIORITY + " ( ID    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " + COLUMN_PRIORITY_NAME_PRIORITY + "    TEXT UNIQUE, " + COLUMN_PRIORITY_DATE_PRI + "    TEXT)"
+                "CREATE TABLE " + TABLE_PRIORITY + " ( ID    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " + COLUMN_PRIORITY_NAME_PRIORITY + "    TEXT, " + COLUMN_PRIORITY_DATE_PRI + "    TEXT, IDAcc     INTEGER)"
         );
         db.execSQL(
-                "CREATE TABLE " + TABLE_STATUS + " ( ID    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, NameStatus    TEXT UNIQUE, DateSta    TEXT)"
+                "CREATE TABLE " + TABLE_STATUS + " ( ID    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, NameStatus    TEXT , DateSta    TEXT, IDAcc     INTEGER)"
         );
 
     }

@@ -36,7 +36,7 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <EditText
-        android:id="@+id/etEditLastName2"
+        android:id="@+id/etEditEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"

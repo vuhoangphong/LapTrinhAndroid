@@ -38,7 +38,7 @@ public class status_DB extends DBHelper {
 
     public List<StatusViewModel> GetListStatus (){
         List<StatusViewModel> lstStatus = new ArrayList<StatusViewModel>();
-        String queryString = "SELECT * FROM " + TABLE_STATUS + " Where IDAcc = " + AccInfo.getId() ;
+        String queryString = "SELECT * FROM " + TABLE_STATUS + " WHERE IDAcc = " + AccInfo.getId() ;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(queryString,null);
         if(cursor.moveToFirst()){

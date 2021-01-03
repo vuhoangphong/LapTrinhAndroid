@@ -15,6 +15,13 @@ public class ProfileOJ {
         Password = password;
     }
 
+    public ProfileOJ(int id, String firstName, String lastName, String email) {
+        this.id = id;
+        FirstName = firstName;
+        LastName = lastName;
+        Email = email;
+    }
+
     public ProfileOJ() {
     }
 

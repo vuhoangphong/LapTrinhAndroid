@@ -30,6 +30,8 @@ import com.example.noteapplication.ui.priority.priority_DB;
 
 import java.util.Date;
 
+import static com.example.noteapplication.Login.AccInfo;
+
 public class profile extends Fragment {
 
     private ProfileViewModel mViewModel;
@@ -50,7 +52,9 @@ public class profile extends Fragment {
         etLastName = (EditText)view.findViewById(R.id.etEditLastName);
         etEmail = (EditText)view.findViewById(R.id.etEditEmail);
 
-
+        etFirstName.setText(AccInfo.getFirstName());
+        etLastName.setText(AccInfo.getLastName());
+        etEmail.setText(AccInfo.getEmail());
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,11 +67,22 @@ public class profile extends Fragment {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(profile.this.getContext(),"update profile",Toast.LENGTH_SHORT).show();
+                profile_DB profile_db = new profile_DB(profile.this.getContext());
+                String firstName = etFirstName.getText().toString();
+                String lastName = etLastName.getText().toString();
+                String email = etEmail.getText().toString();
+
+                ProfileOJ profileOJ = new ProfileOJ(AccInfo.getId(),firstName,lastName,email,AccInfo.getPassWord());
+                boolean update =profile_db.updateProfile(profileOJ);
+                if(update == true)
+                    Toast.makeText(profile.this.getContext(),"update profile ",Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(profile.this.getContext(),"update error profile ",Toast.LENGTH_SHORT).show();
             }
         });
         return view;
     }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

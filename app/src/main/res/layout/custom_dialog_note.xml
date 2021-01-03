@@ -129,7 +129,7 @@
         android:layout_marginTop="188dp"
         android:layout_marginRight="105dp"
         android:text=". . ."
-        android:textColor="#0B090A"
+        android:textColor="#2B2B2B"
         android:textSize="30dp"
         app:backgroundTint="#00D40000" />
 </RelativeLayout>

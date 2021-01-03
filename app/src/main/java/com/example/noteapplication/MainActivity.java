@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         editor.putString("UserName","");
         editor.putString("Pass","");
         editor.apply();
+
         startActivity(intent);
     }
 

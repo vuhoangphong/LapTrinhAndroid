@@ -51,7 +51,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
 
         mChart = (PieChart) root.findViewById(R.id.piechart);
         mChart.setRotationEnabled(true);
-        mChart.setDescription(new Description());
+        mChart.getDescription().setText("");
         mChart.setHoleRadius(0f);
         mChart.setTransparentCircleAlpha(0);
         mChart.setCenterTextSize(10);

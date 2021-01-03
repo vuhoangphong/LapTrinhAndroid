@@ -1,5 +1,6 @@
 package com.example.noteapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
@@ -27,11 +28,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.Inflater;
 
 public class Login extends AppCompatActivity{
     public static Account_Model AccInfo = null;
@@ -131,6 +134,8 @@ public class Login extends AppCompatActivity{
             }
         });
 
+        View inflatedView = getLayoutInflater().inflate(R.layout.nav_header_main, null);
+        Button btnLogout = inflatedView.findViewById(R.id.nav_logout);
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -152,6 +157,15 @@ public class Login extends AppCompatActivity{
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+    public void signOut() {
+        mGoogleSignInClient.signOut()
+                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        // ...
+                    }
+                });
     }
 
     @Override

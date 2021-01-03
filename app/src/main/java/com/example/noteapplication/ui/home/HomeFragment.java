@@ -21,6 +21,7 @@ import com.example.noteapplication.ui.status.StatusViewModel;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -70,16 +71,17 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
         int sum = home_db.sumSatatus();
         List<StatusViewModel> listSatus = home_db.GetListStatus();
         float[] data = new float[listSatus.size()];
+        String[] lData = new String[listSatus.size()];
         int index = 0 ;
         for (StatusViewModel s:listSatus) {
             float p = home_db.countSatatus(s.getName())*100/sum;
-            if(p != 0.0){
+            if(p != 0.0)
                 data[index] = p;
-            }
+            lData[index] = s.getName();
             index++;
         }
         float[] yData =data;
-        String[] xData = { "January", "February", "January" };
+        String[] xData = lData;
         for (int i = 0; i < yData.length;i++){
             yEntrys.add(new PieEntry(yData[i],i));
         }
@@ -90,6 +92,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
         PieDataSet pieDataSet=new PieDataSet(yEntrys,"");
         pieDataSet.setSliceSpace(2);
         pieDataSet.setValueTextSize(12);
+
 
         ArrayList<Integer> colors=new ArrayList<>();
         colors.add(Color.YELLOW);
@@ -102,8 +105,21 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
         pieDataSet.setColors(colors);
 
         Legend legend=pieChart.getLegend();
+        legend.setEnabled(true);
         legend.setForm(Legend.LegendForm.CIRCLE);
         legend.setPosition(Legend.LegendPosition.LEFT_OF_CHART);
+
+
+        List<LegendEntry> entries = new ArrayList<>();
+
+        for (int i = 0; i < xData.length; i++) {
+            LegendEntry entry = new LegendEntry();
+            entry.formColor = colors.get(i);
+            entry.label = xData[i];
+            entries.add(entry);
+        }
+        legend.setCustom(entries);
+
 
         PieData pieData=new PieData(pieDataSet);
         pieChart.setData(pieData);

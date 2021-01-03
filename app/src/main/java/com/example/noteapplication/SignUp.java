@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -40,7 +41,7 @@ public class SignUp extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     if(fName.getText().toString().length()>0&&lName.getText().toString().length()>0&&email.getText().toString().length()>0&&pass.getText().toString().length()>0){
-
+                        if(isValidEmail(email.getText().toString())){
                         if(pass.getText().toString().equals(confirm_Pass.getText().toString())){
                             new SignUp_DB(getApplicationContext()).addAcc(fName.getText().toString(),lName.getText().toString(),email.getText().toString(),pass.getText().toString());
                             Toast.makeText(getApplicationContext(),R.string.Create_Success,Toast.LENGTH_LONG).show();
@@ -48,6 +49,8 @@ public class SignUp extends AppCompatActivity {
                             startActivity(intent);
                         }else {
                             Toast.makeText(getApplicationContext(),R.string.CheckYourPass,Toast.LENGTH_LONG).show();
+                        }}else {
+                            Toast.makeText(getApplicationContext(),"Incorrect Email",Toast.LENGTH_LONG).show();
                         }
 
                     }else {
@@ -68,7 +71,9 @@ public class SignUp extends AppCompatActivity {
         });
     }
 
-
+    public final static boolean isValidEmail(CharSequence target) {
+        return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+    }
 
 }
 class SignUp_DB extends DBHelper{

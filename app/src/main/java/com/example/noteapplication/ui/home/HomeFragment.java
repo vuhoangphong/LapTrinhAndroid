@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 
 import com.example.noteapplication.R;
+import com.example.noteapplication.ui.status.StatusViewModel;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
@@ -54,9 +55,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
         mChart.setTransparentCircleAlpha(0);
         mChart.setCenterTextSize(10);
         mChart.setDrawEntryLabels(true);
-
         addDataSet(mChart,root);
-
         mChart.setOnChartValueSelectedListener(this);
 
         return root;
@@ -66,19 +65,20 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
         ArrayList<PieEntry> yEntrys = new ArrayList<>();
         ArrayList<String> xEntrys = new ArrayList<>();
 
-        home_DB home_db = new home_DB(view.getContext());
-        int done = home_db.countSatatus("done");
-        int pending = home_db.countSatatus("pending");
-        int processing = home_db.countSatatus("processing");
-        int sum = (done+pending+processing);
-       try {
-           done = (done/sum)*100;
-           pending = (pending/sum)*100;
-           processing = (processing/sum)*100;
-       }catch (Exception e){
-       }
 
-        float[] yData = { done, pending, processing };
+        home_DB home_db = new home_DB(view.getContext());
+        int sum = home_db.sumSatatus();
+        List<StatusViewModel> listSatus = home_db.GetListStatus();
+        float[] data = new float[listSatus.size()];
+        int index = 0 ;
+        for (StatusViewModel s:listSatus) {
+            float p = home_db.countSatatus(s.getName())*100/sum;
+            if(p != 0.0){
+                data[index] = p;
+            }
+            index++;
+        }
+        float[] yData =data;
         String[] xData = { "January", "February", "January" };
         for (int i = 0; i < yData.length;i++){
             yEntrys.add(new PieEntry(yData[i],i));
@@ -95,6 +95,9 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
         colors.add(Color.YELLOW);
         colors.add(Color.GREEN);
         colors.add(Color.RED);
+        colors.add(Color.BLUE);
+       colors.add(Color.GRAY);
+       colors.add(Color.MAGENTA);
 
         pieDataSet.setColors(colors);
 

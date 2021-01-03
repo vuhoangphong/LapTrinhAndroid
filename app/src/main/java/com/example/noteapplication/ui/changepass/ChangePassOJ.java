@@ -1,13 +1,13 @@
-package com.example.noteapplication.ui.profile;
+package com.example.noteapplication.ui.changepass;
 
-public class ProfileOJ {
+public class ChangePassOJ {
     private int id;
     private String FirstName;
     private String LastName;
     private String Email;
     private String Password;
 
-    public ProfileOJ(int id, String firstName, String lastName, String email, String password) {
+    public ChangePassOJ(int id, String firstName, String lastName, String email, String password) {
         this.id = id;
         FirstName = firstName;
         LastName = lastName;
@@ -15,7 +15,8 @@ public class ProfileOJ {
         Password = password;
     }
 
-    public ProfileOJ() {
+
+    public ChangePassOJ() {
     }
 
     public int getId() {

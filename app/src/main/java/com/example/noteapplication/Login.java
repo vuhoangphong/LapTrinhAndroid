@@ -29,6 +29,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +40,8 @@ public class Login extends AppCompatActivity{
     GoogleSignInClient mGoogleSignInClient;
     CheckBox remember;
     EditText etUserName,etPass;
+    public static String remember_User,remember_Pass;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -59,8 +62,6 @@ public class Login extends AppCompatActivity{
             AccInfo = new Login_DB(Login.this).getAccInfo(remember_user,remember_pass);
             Intent intent = new Intent(Login.this,MainActivity.class);
             startActivity(intent);
-        }else {
-            Toast.makeText(Login.this,"Please Sign In",Toast.LENGTH_LONG).show();
         }
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -72,7 +73,8 @@ public class Login extends AppCompatActivity{
 
                     if(c == true){
                         AccInfo = acc.getAccInfo(etUserName.getText().toString(),etPass.getText().toString());
-
+                        remember_User = etUserName.getText().toString();
+                        remember_Pass = etPass.getText().toString();
                         Intent intent = new Intent(Login.this,MainActivity.class);
                         startActivity(intent);
                     }else {
@@ -85,12 +87,14 @@ public class Login extends AppCompatActivity{
         remember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                EditText et1 = (EditText) findViewById(R.id.editTextUserName);
+                EditText et2 = (EditText) findViewById(R.id.editTextPassWord);
                 if(buttonView.isChecked()){
                     SharedPreferences preferences = getSharedPreferences("checkbox",MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("remember","true");
-                    editor.putString("UserName",etUserName.getText().toString());
-                    editor.putString("Pass",etPass.getText().toString());
+                    editor.putString("UserName",et1.getText().toString());
+                    editor.putString("Pass",et2.getText().toString());
                     editor.apply();
                     Toast.makeText(Login.this,"Remember",Toast.LENGTH_LONG).show();
                 }else {
@@ -167,7 +171,7 @@ public class Login extends AppCompatActivity{
                 if(acc_App == true){
                     AccInfo = new Login_DB(Login.this).getAccInfo(account.getEmail(),account.getEmail());
                     Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-
+                   
                     startActivity(intent);
                 }else {
                     boolean signUp =new SignUp_DB(Login.this).addAcc(account.getGivenName(),account.getFamilyName(),account.getEmail(),account.getEmail());

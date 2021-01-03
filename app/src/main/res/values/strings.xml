@@ -26,6 +26,7 @@
     //sign up
     <string name="insert_full">Please Insert Full Your Information</string>
     <string name="Create_Success">Create Success</string>
+    <string name="Create_Un_success">Create UnSuccess</string>
     <string name="CheckYourPass">Please Check Your Password, Passwords are not the same</string>
 
     //change profile

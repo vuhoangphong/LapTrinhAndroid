@@ -74,7 +74,28 @@ public class SignUp extends AppCompatActivity {
     public final static boolean isValidEmail(CharSequence target) {
         return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
+    class SignUp_DB extends DBHelper{
+        public SignUp_DB(Context context) {
+            super(context);
+        }
 
+
+
+
+        public boolean addAcc(String fName,String lName,String email,String passWord){
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("FirstName",fName);
+            contentValues.put("LastName",lName);
+            contentValues.put("Email",email);
+            contentValues.put("Password",passWord);
+            long inserted = db.insert(TABLE_ACCOUNT,null,contentValues);
+            if(inserted == -1 )
+                return false;
+            else
+                return true;
+        }
+    }
 }
 class SignUp_DB extends DBHelper{
     public SignUp_DB(Context context) {

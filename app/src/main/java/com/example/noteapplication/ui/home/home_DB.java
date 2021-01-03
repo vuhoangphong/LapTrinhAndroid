@@ -20,7 +20,7 @@ public class home_DB extends DBHelper {
     public int  countSatatus (String nameStatus){
         int count = 0;
       try {
-          String queryString = "SELECT COUNT(*) as count FROM " + TABLE_NOTE + " Where IDAcc = " + AccInfo.getId()+" AND Status = "+nameStatus ;
+          String queryString = "SELECT COUNT(*) as count FROM " + TABLE_NOTE + " Where IDAcc = " + AccInfo.getId()+" AND Status = '"+ nameStatus +"'" ;
           SQLiteDatabase db = this.getReadableDatabase();
           Cursor cursor = db.rawQuery(queryString,null);
           count =cursor.getInt(0);

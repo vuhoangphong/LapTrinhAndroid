@@ -40,6 +40,11 @@
                         android:id="@+id/nav_changepass"
                         android:icon="@drawable/privacy"
                         android:title="@string/menu_pass"/>
+                    <item
+                        android:id="@+id/nav_logout"
+                        android:icon="@drawable/logout"
+                        android:onClick="Logout"
+                        android:title="@string/menu_logout"/>
 
                 </group>
             </menu>

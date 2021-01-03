@@ -42,7 +42,10 @@ public class Login extends AppCompatActivity{
         Button btnSignUp = (Button) findViewById(R.id.btnSignUp);
         SharedPreferences preferences = getSharedPreferences("checkbox",MODE_PRIVATE);
         String checkbox = preferences.getString("remember","");
+        String remember_user = preferences.getString("UserName","");
+        String remember_pass = preferences.getString("Pass","");
         if(checkbox.equals("true")){
+            AccInfo = new Login_DB(Login.this).getAccInfo(remember_user,remember_pass);
             Intent intent = new Intent(Login.this,MainActivity.class);
             startActivity(intent);
         }else {
@@ -75,12 +78,16 @@ public class Login extends AppCompatActivity{
                     SharedPreferences preferences = getSharedPreferences("checkbox",MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("remember","true");
+                    editor.putString("UserName",etUserName.getText().toString());
+                    editor.putString("Pass",etPass.getText().toString());
                     editor.apply();
                     Toast.makeText(Login.this,"Remember",Toast.LENGTH_LONG).show();
                 }else {
                     SharedPreferences preferences = getSharedPreferences("checkbox",MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("remember","false");
+                    editor.putString("UserName","");
+                    editor.putString("Pass","");
                     editor.apply();
 
                 }

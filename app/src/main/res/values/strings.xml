@@ -16,6 +16,7 @@
     <string name="menu_note">Note</string>
     <string name="menu_editAcc">Edit Profile</string>
     <string name="menu_pass">Change Pass</string>
+    <string name="menu_logout">Log Out</string>
     <string name="lb_menu">Account</string>
 
     <string name="incorrectUserPass">Incorrect UserName Or PassWord</string>

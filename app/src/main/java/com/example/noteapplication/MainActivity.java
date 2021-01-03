@@ -1,7 +1,9 @@
 package com.example.noteapplication;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.view.Window;
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
+
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home,R.id.nav_EDProfile,R.id.nav_note,R.id.nav_status,R.id.nav_category,R.id.nav_priority, R.id.nav_gallery, R.id.nav_slideshow,R.id.nav_changepass)
@@ -56,6 +59,16 @@ public class MainActivity extends AppCompatActivity {
         TextView navEmail = (TextView) headerView.findViewById(R.id.tvMenu_Email);
         navEmail.setText(Login.AccInfo.getEmail());
         navUsername.setText(Login.AccInfo.getFirstName() + " "+Login.AccInfo.getLastName());
+    }
+    public void Logout(MenuItem item){
+        Intent intent = new Intent(MainActivity.this,Login.class);
+        SharedPreferences preferences = getSharedPreferences("checkbox",MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("remember","false");
+        editor.putString("UserName","");
+        editor.putString("Pass","");
+        editor.apply();
+        startActivity(intent);
     }
 
     @Override

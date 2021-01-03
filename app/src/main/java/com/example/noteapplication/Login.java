@@ -165,11 +165,14 @@ public class Login extends AppCompatActivity{
             if (account != null) {
                 Boolean acc_App=new Login_DB(Login.this).getData(account.getEmail(),account.getEmail());
                 if(acc_App == true){
-                    Intent intent = new Intent(Login.this,MainActivity.class);
+                    AccInfo = new Login_DB(Login.this).getAccInfo(account.getEmail(),account.getEmail());
+                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+
                     startActivity(intent);
                 }else {
                     boolean signUp =new SignUp_DB(Login.this).addAcc(account.getGivenName(),account.getFamilyName(),account.getEmail(),account.getEmail());
                     if(signUp== true){
+                        AccInfo = new Login_DB(Login.this).getAccInfo(account.getEmail(),account.getEmail());
                         Intent intent = new Intent(Login.this,MainActivity.class);
                         startActivity(intent);
                         Toast.makeText(Login.this,R.string.Create_Success,Toast.LENGTH_LONG).show();

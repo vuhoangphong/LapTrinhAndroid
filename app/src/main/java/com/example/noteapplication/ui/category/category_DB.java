@@ -11,6 +11,8 @@ import com.example.noteapplication.ui.priority.PriorityOJ;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.noteapplication.Login.AccInfo;
+
 public class category_DB extends DBHelper {
     public category_DB(Context context) {
         super(context);
@@ -21,6 +23,7 @@ public class category_DB extends DBHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put("NameCategory",categoryOJ.getName());
         contentValues.put("DateCate",categoryOJ.getCreatedate());
+        contentValues.put("IDAcc",AccInfo.getId());
         long inserted = db.insert("Category",null,contentValues);
         if(inserted == -1 )
             return false;
@@ -43,6 +46,7 @@ public class category_DB extends DBHelper {
         contentValues.put("NameCategory",categoryOJ.getName());
         contentValues.put("DateCate",categoryOJ.getCreatedate());
         contentValues.put("ID",categoryOJ.getId());
+        contentValues.put("IDAcc",AccInfo.getId());
         long inserted = db.update("Category",contentValues,"ID = "+ categoryOJ.getId(),null);
         if(inserted == -1 )
             return false;
@@ -52,7 +56,7 @@ public class category_DB extends DBHelper {
 
     public List<CategoryOJ> getListCategory (){
         List<CategoryOJ> list = new ArrayList<CategoryOJ>();
-        String queryString = "SELECT * FROM  Category ORDER BY id DESC";
+        String queryString = "SELECT * FROM  Category Where IDAcc = " + AccInfo.getId()+" ORDER BY id DESC";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(queryString,null);
         if(cursor.moveToFirst()){

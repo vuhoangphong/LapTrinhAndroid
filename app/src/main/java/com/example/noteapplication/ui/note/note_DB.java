@@ -13,6 +13,8 @@ import com.example.noteapplication.ui.status.StatusViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.noteapplication.Login.AccInfo;
+
 public class note_DB extends DBHelper {
     public note_DB(Context context) {
         super(context);
@@ -27,6 +29,7 @@ public class note_DB extends DBHelper {
         contentValues.put("Status",noteOJ.getStatus());
         contentValues.put("PlanDate",noteOJ.getPlanDate());
         contentValues.put("DateCreate",noteOJ.getCreateDate());
+        contentValues.put("IDAcc",AccInfo.getId());
         long inserted = db.insert(TABLE_NOTE,null,contentValues);
         if(inserted == -1 )
             return false;
@@ -36,7 +39,7 @@ public class note_DB extends DBHelper {
 
     public List<noteOJ> getNote (){
         List<noteOJ> list = new ArrayList<noteOJ>();
-        String queryString = "SELECT * FROM  Note ORDER BY id DESC";
+        String queryString = "SELECT * FROM  Note Where IDAcc = "+ AccInfo.getId()+ " ORDER BY id DESC";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(queryString,null);
         if(cursor.moveToFirst()){
@@ -53,7 +56,7 @@ public class note_DB extends DBHelper {
 
     public List<CategoryOJ> getSpinnerCategory (){
         List<CategoryOJ> list = new ArrayList<CategoryOJ>();
-        String queryString = "SELECT * FROM  Category ORDER BY id DESC";
+        String queryString = "SELECT * FROM  Category Where IDAcc = "+ AccInfo.getId()+" ORDER BY id DESC";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(queryString,null);
         if(cursor.moveToFirst()){
@@ -73,7 +76,7 @@ public class note_DB extends DBHelper {
 
     public List<PriorityOJ> getSpinnerPriority (){
         List<PriorityOJ> listPri = new ArrayList<PriorityOJ>();
-        String queryString = "SELECT * FROM " + TABLE_PRIORITY;
+        String queryString = "SELECT * FROM " + TABLE_PRIORITY +" Where IDAcc = "+ AccInfo.getId();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(queryString,null);
         if(cursor.moveToFirst()){
@@ -93,7 +96,7 @@ public class note_DB extends DBHelper {
 
     public List<StatusViewModel> getSpinnerStatus (){
         List<StatusViewModel> lstStatus = new ArrayList<StatusViewModel>();
-        String queryString = "SELECT * FROM " + TABLE_STATUS;
+        String queryString = "SELECT * FROM " + TABLE_STATUS +" Where IDAcc = "+ AccInfo.getId();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(queryString,null);
         if(cursor.moveToFirst()){

@@ -22,6 +22,11 @@
     <string name="inputUserNamePass">Input UserName Or Password</string>
     <string name="lb_changeyourpass">Change Your PassWord</string>
 
+    //sign up
+    <string name="insert_full">Please Insert Full Your Information</string>
+    <string name="Create_Success">Create Success</string>
+    <string name="CheckYourPass">Please Check Your Password, Passwords are not the same</string>
+
     //change profile
     <string name="lb_editProfile">Edit Profile</string>
 

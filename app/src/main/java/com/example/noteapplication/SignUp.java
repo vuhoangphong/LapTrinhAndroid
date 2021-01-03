@@ -30,20 +30,30 @@ public class SignUp extends AppCompatActivity {
         EditText lName= (EditText)findViewById(R.id.etUserLastName);
         EditText email= (EditText)findViewById(R.id.etEmail);
         EditText pass= (EditText)findViewById(R.id.etPassword);
+        EditText confirm_Pass= (EditText)findViewById(R.id.etConfirmPass);
         FloatingActionButton btnAddAcc = (FloatingActionButton)findViewById(R.id.btnAddAcc);
         btnAddAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
+                    if(fName.getText().toString().length()>0&&lName.getText().toString().length()>0&&email.getText().toString().length()>0&&pass.getText().toString().length()>0){
 
-                    new SignUp_DB(getApplicationContext()).addAcc(fName.getText().toString(),lName.getText().toString(),email.getText().toString(),pass.getText().toString());
-                    Toast.makeText(getApplicationContext(),"Create Success",Toast.LENGTH_LONG).show();
-                    Intent intent=new Intent(SignUp.this,MainActivity.class);
-                    startActivity(intent);
+                        if(pass.getText().toString().equals(confirm_Pass.getText().toString())){
+                            new SignUp_DB(getApplicationContext()).addAcc(fName.getText().toString(),lName.getText().toString(),email.getText().toString(),pass.getText().toString());
+                            Toast.makeText(getApplicationContext(),R.string.Create_Success,Toast.LENGTH_LONG).show();
+                            Intent intent=new Intent(SignUp.this,Login.class);
+                            startActivity(intent);
+                        }else {
+                            Toast.makeText(getApplicationContext(),R.string.CheckYourPass,Toast.LENGTH_LONG).show();
+                        }
+
+                    }else {
+                        Toast.makeText(getApplicationContext(),R.string.insert_full,Toast.LENGTH_LONG).show();
+                    }
+
                 }catch (Exception e){
                     Toast.makeText(getApplicationContext(),"UnSuccess",Toast.LENGTH_LONG).show();
                 }
-
             }
         });
     }

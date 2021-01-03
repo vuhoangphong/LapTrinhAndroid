@@ -34,17 +34,11 @@ public class Login extends AppCompatActivity{
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Login_DB acc= new Login_DB(Login.this);
-                Cursor c= acc.getData(etUserName.getText().toString(),etPass.getText().toString());
-                String userName_Return =  c.getString(c.getColumnIndex("Email"));
-                String userPass_Return =  c.getString(c.getColumnIndex("Pass"));
-                if (!c.isClosed()) {
-                    c.close();
-                }
+                Boolean c= acc.getData(etUserName.getText().toString(),etPass.getText().toString());
 
-                // Perform action on click
                 if(etUserName.getText().toString().length()>0&&etPass.getText().toString().length()>0){
 
-                    if(userName_Return.equals(etUserName.getText().toString())&&userPass_Return.equals(etPass.getText().toString())){
+                    if(c == true){
                         Intent intent = new Intent(Login.this,MainActivity.class);
                         startActivity(intent);
                     }else {
@@ -68,10 +62,11 @@ public class Login extends AppCompatActivity{
 
 
 
-        public Cursor getData(String userName,String passWord){
+        public Boolean getData(String userName,String passWord){
             SQLiteDatabase db=this.getReadableDatabase();
-            Cursor res=db.rawQuery("Select * from Account where Email = " + userName + " and Password = "+ passWord +"", null);
-            return res;
+            Cursor res=db.rawQuery("Select * from Account where Email = ? and Password = ?", new String[]{userName,passWord});
+           if (res.getCount()>0)return true;
+           else return false;
         }
     }
 }

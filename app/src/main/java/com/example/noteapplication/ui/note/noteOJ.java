@@ -7,14 +7,24 @@ public class noteOJ {
     String status;
     String planDate;
     String createDate;
+    int id;
 
-    public noteOJ(String name,String category,String priority,String status,String planDate,String createDate) {
+    public noteOJ(String name,String category,String priority,String status,String planDate,String createDate,int id) {
         this.name = name;
         this.category = category;
         this.priority = priority;
         this.status = status;
         this.planDate = planDate;
         this.createDate = createDate;
+        this.id = id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setName(String name) {

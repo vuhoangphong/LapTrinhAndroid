@@ -44,7 +44,7 @@ public class note_DB extends DBHelper {
         Cursor cursor = db.rawQuery(queryString,null);
         if(cursor.moveToFirst()){
             do {
-                noteOJ  noteOJ = new noteOJ(cursor.getString(4),cursor.getString(2),cursor.getString(1),cursor.getString(3),cursor.getString(6),cursor.getString(5));
+                noteOJ  noteOJ = new noteOJ(cursor.getString(4),cursor.getString(2),cursor.getString(1),cursor.getString(3),cursor.getString(6),cursor.getString(5),cursor.getInt(0));
                 list.add(noteOJ);
             }while (cursor.moveToNext());
         }else{}
@@ -111,6 +111,35 @@ public class note_DB extends DBHelper {
         cursor.close();
         db.close();
         return lstStatus;
+    }
+
+    public boolean  deleteNote(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        long inserted = db.delete("Note","id = "+id,null);
+        if(inserted == -1 )
+            return false;
+        else
+            return true;
+    }
+
+
+
+    public boolean  updateNote(noteOJ noteOJ){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("Status",noteOJ.getStatus());
+        contentValues.put("Category",noteOJ.getCategory());
+        contentValues.put("IDAcc",AccInfo.getId());
+        contentValues.put("ID",noteOJ.getId());
+        contentValues.put("Priority",noteOJ.getPriority());
+        contentValues.put("PlanDate",noteOJ.getPlanDate());
+        contentValues.put("DateCreate",noteOJ.getCreateDate());
+        contentValues.put("Content",noteOJ.getName());
+        long inserted = db.update("Note",contentValues,"ID = "+ noteOJ.getId(),null);
+        if(inserted == -1 )
+            return false;
+        else
+            return true;
     }
 
 

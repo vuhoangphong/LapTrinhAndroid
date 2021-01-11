@@ -33,6 +33,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static com.example.noteapplication.Login.AccInfo;
+
 public class Note_dialog extends DialogFragment {
     Button btn;
     TextView txt;
@@ -40,6 +42,15 @@ public class Note_dialog extends DialogFragment {
     Spinner category,priority,status;
     private DatePickerDialog.OnDateSetListener onDateSetListener;
     private  Note_dialog_listen note_dialog_listen;
+    noteOJ noteOJData;
+    int keyId = -1 ;
+    public Note_dialog(noteOJ noteOJ,int keyId) {
+        this.noteOJData= noteOJ;
+        this.keyId = keyId;
+    }
+
+    public Note_dialog() {
+    }
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -86,8 +97,8 @@ public class Note_dialog extends DialogFragment {
             }
         };
 
-
-        // when click add
+        if(keyId == -1){
+            // when click add
             builder.setView(view)
                     .setTitle("Note form").setNegativeButton("close", new DialogInterface.OnClickListener() {
                 @Override
@@ -104,25 +115,67 @@ public class Note_dialog extends DialogFragment {
                             priority.getSelectedItem().toString(),
                             status.getSelectedItem().toString(),
                             txt.getText().toString(),
-                            date
+                            date,
+                            -1
                     );
                     note_DB note_db = new note_DB(getContext());
-                  if(checkDataInput(noteOJ)){
-                      try {
-                          note_db.insetCategory(noteOJ);
-                          note_dialog_listen.getData();
-                      }catch (Exception e){
-                          Toast.makeText(getContext(),"error insert",Toast.LENGTH_SHORT).show();
-                      }
-                  }else {
-                      Toast.makeText(getContext(),R.string.insert_full,Toast.LENGTH_SHORT).show();
-                  }
+                    if(checkDataInput(noteOJ)){
+                        try {
+                            note_db.insetCategory(noteOJ);
+                            note_dialog_listen.getData();
+                        }catch (Exception e){
+                            Toast.makeText(getContext(),"error insert",Toast.LENGTH_SHORT).show();
+                        }
+                    }else {
+                        Toast.makeText(getContext(),R.string.insert_full,Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
-        return builder.create();
-        }
+        }else {
+            name.setText(noteOJData.getName());
+            addDataSpinnerCategory(view,noteOJData.getCategory());
+            addDataSpinnerStatus(view,noteOJData.getStatus());
+            addDataSpinnerPriority(view,noteOJData.getPriority());
+            txt.setText(noteOJData.getPlanDate());
 
-     private  Boolean checkDataInput(noteOJ noteOJ){
+
+            // when click add
+            builder.setView(view)
+                    .setTitle("Note form").setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            }).setPositiveButton("save", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String date = java.text.DateFormat.getDateTimeInstance().format(new Date());
+                    noteOJ noteOJ = new noteOJ(
+                            name.getText().toString(),
+                            category.getSelectedItem().toString(),
+                            priority.getSelectedItem().toString(),
+                            status.getSelectedItem().toString(),
+                            txt.getText().toString(),
+                            date,
+                            AccInfo.getId()
+                    );
+                    note_DB note_db = new note_DB(getContext());
+
+                    try {
+                        note_db.updateNote(noteOJ);
+                        note_dialog_listen.getData();
+                    }catch (Exception e){
+                        Toast.makeText(getContext(),"error update",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+        }
+        note_dialog_listen.getData();
+        return builder.create();
+    }
+
+    private  Boolean checkDataInput(noteOJ noteOJ){
         if(noteOJ.getCategory().equals("")
                 || noteOJ.getName().equals("")
                 || noteOJ.getPlanDate().equals("")
@@ -131,7 +184,7 @@ public class Note_dialog extends DialogFragment {
         )
             return false;
         return true;
-     }
+    }
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -150,7 +203,23 @@ public class Note_dialog extends DialogFragment {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Spinner spinnerCategory = view.findViewById(R.id.select_category);
         spinnerCategory.setAdapter(dataAdapter);
+    }
 
+    private void addDataSpinnerCategory(View view,String category){
+        note_DB note_db = new note_DB(Note_dialog.this.getContext());
+        List<CategoryOJ> categories = note_db.getSpinnerCategory();
+        List<String> nameCategori = new ArrayList<>();
+        for (CategoryOJ cate:categories) {
+            nameCategori.add(cate.getName());
+        }
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item, nameCategori);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Spinner spinnerCategory = view.findViewById(R.id.select_category);
+        spinnerCategory.setAdapter(dataAdapter);
+        if(category != null){
+            int spinnerPosition = dataAdapter.getPosition(category);
+            spinnerCategory.setSelection(spinnerPosition);
+        }
     }
 
     private void addDataSpinnerPriority(View view){
@@ -164,8 +233,26 @@ public class Note_dialog extends DialogFragment {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Spinner spinnerPriority = view.findViewById(R.id.select_priority);
         spinnerPriority.setAdapter(dataAdapter);
+    }
+
+    private void addDataSpinnerPriority(View view,String Priority){
+        note_DB note_db = new note_DB(Note_dialog.this.getContext());
+        List<PriorityOJ> priorityOJS = note_db.getSpinnerPriority();
+        List<String> namePriority = new ArrayList<>();
+        for (PriorityOJ cate:priorityOJS) {
+            namePriority.add(cate.getName());
+        }
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item, namePriority);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Spinner spinnerPriority = view.findViewById(R.id.select_priority);
+        spinnerPriority.setAdapter(dataAdapter);
+        if(Priority != null){
+            int spinnerPosition = dataAdapter.getPosition(Priority);
+            spinnerPriority.setSelection(spinnerPosition);
+        }
 
     }
+
 
     private void addDataSpinnerStatus(View view){
         note_DB note_db = new note_DB(Note_dialog.this.getContext());
@@ -178,15 +265,32 @@ public class Note_dialog extends DialogFragment {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Spinner spinnerStatus = view.findViewById(R.id.select_status);
         spinnerStatus.setAdapter(dataAdapter);
+    }
 
+    private void addDataSpinnerStatus(View view, String status){
+        note_DB note_db = new note_DB(Note_dialog.this.getContext());
+        List<StatusViewModel> lstStatus = note_db.getSpinnerStatus();
+        List<String> nameStatus = new ArrayList<>();
+        for (StatusViewModel cate:lstStatus) {
+            nameStatus.add(cate.getName());
+        }
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item, nameStatus);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Spinner spinnerStatus = view.findViewById(R.id.select_status);
+        spinnerStatus.setAdapter(dataAdapter);
+        if(status != null){
+            int spinnerPosition = dataAdapter.getPosition(status);
+            spinnerStatus.setSelection(spinnerPosition);
+        }
     }
 
 
 
 
 
+
     public interface Note_dialog_listen{
-       void getData();
+        void getData();
     }
 }
 

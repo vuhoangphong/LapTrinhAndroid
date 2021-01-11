@@ -10,10 +10,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -27,13 +30,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-public class note extends Fragment implements Note_dialog.Note_dialog_listen{
+public class note extends Fragment implements Note_dialog.Note_dialog_listen,PopupMenu.OnMenuItemClickListener{
 
     private NoteViewModel mViewModel;
     private List<noteOJ> noteOJList = new ArrayList<noteOJ>();
     private noteAdapter adapter =null ;
     ListView listView;
-
+    private int index = 0;
     public static note newInstance() {
         return new note();
     }
@@ -49,6 +52,13 @@ public class note extends Fragment implements Note_dialog.Note_dialog_listen{
             @Override
             public void onClick(View v) {
                 openDialog();
+            }
+        });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                index = position;
+                showPopup(view);
             }
         });
         return  v;
@@ -79,6 +89,8 @@ public class note extends Fragment implements Note_dialog.Note_dialog_listen{
         noteAdapter noteAdapter = new noteAdapter();
         listView.setAdapter(noteAdapter);
     }
+
+
     // adapter
     public class noteAdapter extends ArrayAdapter<noteOJ> {
         public noteAdapter(Context context , int textViewResourceId){
@@ -106,4 +118,35 @@ public class note extends Fragment implements Note_dialog.Note_dialog_listen{
             return row;
         }
     }
+
+    // shows a pop-up when pressed and held
+    public  void  showPopup(View v){
+        PopupMenu popupMenu = new PopupMenu(getContext(),v);
+        popupMenu.setOnMenuItemClickListener(this);
+        popupMenu.inflate(R.menu.popup_menu_category);
+        popupMenu.show();
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.edit:
+                openDialogEdit(noteOJList.get(index),noteOJList.get(index).getId());
+                return  true;
+            case R.id.delete:
+                note_DB note_DB = new note_DB(getContext());
+                note_DB.deleteNote(noteOJList.get(index).getId());
+                getData();
+                return  true;
+            default:
+                return false;
+        }
+    }
+
+    //open dialog edit when press and hold
+    public  void openDialogEdit(noteOJ noteOJ, int key){
+        Note_dialog noteDialog = new Note_dialog(noteOJ,key);
+        noteDialog.show(getChildFragmentManager(),"example dialog");
+    }
+
 }

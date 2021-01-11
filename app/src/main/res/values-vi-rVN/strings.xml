@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NoteApplication</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Cài Đặt</string>
+    <string name="menu_home">Trang Chủ</string>
+    <string name="menu_category">Thể Loại</string>
+    <string name="menu_gallery">Thư Viện</string>
+    <string name="menu_slideshow">Trình Chiếu</string>
+    <string name="menu_priority">Độ Ưu Tiên</string>
+    <string name="menu_status">Trạng Thái</string>
+    <string name="menu_note">Ghi Chú</string>
+    <string name="menu_editAcc">Thay Đổi Thông Tin</string>
+    <string name="menu_pass">Đổi Mật Khẩu</string>
+    <string name="menu_logout">Đăng Xuất</string>
+    <string name="lb_menu">Tài Khoản</string>
+    <string name="incorrectUserPass">Sai Tên Đăng Nhập Hoặc Mật Khẩu</string>
+    <string name="inputUserNamePass">Nhập Tên Đăng Nhập Hoặc Mật Khẩu</string>
+    <string name="lb_changeyourpass">Thay Đổi Mật Khẩu</string>
+    <string name="insert_full">Vui Lòng Nhập Đầy Đủ Thông Tin</string>
+    <string name="Create_Success">Tạo Thành Công</string>
+    <string name="Create_Un_success">Tạo Thất Bại</string>
+    <string name="CheckYourPass">Hãy Kiểm Tra Lại Mật Khẩu, Mật Khẩu Không Giống Nhau</string>
+    <string name="lb_editProfile">Thay Đổi Thông Tin</string>
+    <string name="edit">Chỉnh Sửa</string>
+    <string name="delete">Xóa</string>
+    <string name="cancel">Hủy</string>
+    <string name="add">Thêm</string>
+    <string name="register">Đăng Ký</string>
+    <string name="et_UserName">Tên Đăng Nhập(Email)...</string>
+    <string name="et_PassWord">Mật Khẩu...</string>
+    <string name="RememberCheckBox">Nhớ Tài Khoản</string>
+    <string name="btnLogin">Đăng Nhập</string>
+    <string name="EnterYourFirstName">Nhập Họ</string>
+    <string name="EnterYourLastName">Nhập Tên</string>
+    <string name="EnterYourEmail">Email</string>
+    <string name="EnterYourPassWord">Nhập Mật Khẩu</string>
+    <string name="ConfirmYourPassWord">Nhập Lại Mật Khẩu</string>
+    <string name="AlreadyHaveAccount">Bạn Đã Có Mật Khẩu! Đăng Nhập Ở Đây</string>
+</resources>

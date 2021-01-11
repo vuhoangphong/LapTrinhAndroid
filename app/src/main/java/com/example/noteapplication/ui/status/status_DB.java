@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.noteapplication.DBHelper;
 import com.example.noteapplication.Login;
+import com.example.noteapplication.ui.category.CategoryOJ;
 
 
 import java.util.ArrayList;
@@ -28,6 +29,29 @@ public class status_DB extends DBHelper {
         contentValues.put("DateSta",status.getDatetime());
         contentValues.put("IDAcc", AccInfo.getId());
         long inserted = db.insert(TABLE_STATUS,null,contentValues);
+        if(inserted == -1 )
+            return false;
+        else
+            return true;
+    }
+
+    public boolean  deleteStatus(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        long inserted = db.delete("Status","id = "+id,null);
+        if(inserted == -1 )
+            return false;
+        else
+            return true;
+    }
+
+    public boolean  updateStatus(StatusViewModel status){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("NameStatus",status.getName());
+        contentValues.put("DateSta",status.getDatetime());
+        contentValues.put("ID",status.getID());
+        contentValues.put("IDAcc",AccInfo.getId());
+        long inserted = db.update("Status",contentValues,"ID = "+ status.getID(),null);
         if(inserted == -1 )
             return false;
         else

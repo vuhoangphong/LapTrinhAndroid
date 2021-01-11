@@ -27,6 +27,14 @@ public class status_dialog extends DialogFragment {
         void addStatus(String status, String date);
         void getData();
     }
+    String name  = "-1";
+    int keyId  ;
+    public status_dialog(String name,int keyId) {
+        this.name= name;
+        this.keyId = keyId;
+    }
+    public status_dialog() {
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -35,29 +43,57 @@ public class status_dialog extends DialogFragment {
         View view = inflater.inflate(R.layout.custom_dialog_status,null);
 
 
-            builder.setView(view)
-                    .setTitle("Add Status").setNegativeButton("close", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
+            if(name.equals("-1")){
+                builder.setView(view)
+                        .setTitle("Add Status").setNegativeButton("close", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
-                }
-            }).setPositiveButton("add", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    EditText txt =  (EditText)view.findViewById(R.id.etStatusDialog);
-                    String status="Name: "+txt.getText().toString() ;
-                    String date = "Created Day: "+java.text.DateFormat.getDateTimeInstance().format(new Date());
-                    dialogAddStatusListener.addStatus(status,date);
-                    try {
-                        status_DB dbHelper = new status_DB(status_dialog.this.getContext());
-                        dbHelper.addStatus(new StatusViewModel(-1,txt.getText().toString(),java.text.DateFormat.getDateTimeInstance().format(new Date())));
-                        dialogAddStatusListener.getData();
-                        Toast.makeText(status_dialog.this.getContext(),"Success",Toast.LENGTH_SHORT).show();
-                    }catch (Exception e){
-                        Toast.makeText(status_dialog.this.getContext(),"UnSuccess",Toast.LENGTH_SHORT).show();
                     }
-                }
-            });
+                }).setPositiveButton("add", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        EditText txt =  (EditText)view.findViewById(R.id.etStatusDialog);
+                        String status="Name: "+txt.getText().toString() ;
+                        String date = "Created Day: "+java.text.DateFormat.getDateTimeInstance().format(new Date());
+                        dialogAddStatusListener.addStatus(status,date);
+                        try {
+                            status_DB dbHelper = new status_DB(status_dialog.this.getContext());
+                            dbHelper.addStatus(new StatusViewModel(-1,txt.getText().toString(),java.text.DateFormat.getDateTimeInstance().format(new Date())));
+                            dialogAddStatusListener.getData();
+                            Toast.makeText(status_dialog.this.getContext(),"Success",Toast.LENGTH_SHORT).show();
+                        }catch (Exception e){
+                            Toast.makeText(status_dialog.this.getContext(),"UnSuccess",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }else {
+                EditText txt =  (EditText)view.findViewById(R.id.etStatusDialog);
+                txt.setText(name);
+                builder.setView(view)
+                        .setTitle("Edit Status").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        EditText txt =  (EditText)view.findViewById(R.id.etStatusDialog);
+                        String status="Name: "+txt.getText().toString() ;
+                        String date = "Created Day: "+java.text.DateFormat.getDateTimeInstance().format(new Date());
+                        dialogAddStatusListener.addStatus(status,date);
+                        try {
+                            status_DB dbHelper = new status_DB(status_dialog.this.getContext());
+                            dbHelper.updateStatus(new StatusViewModel(keyId,txt.getText().toString(),java.text.DateFormat.getDateTimeInstance().format(new Date())));
+                            dialogAddStatusListener.getData();
+                            Toast.makeText(status_dialog.this.getContext(),"Success",Toast.LENGTH_SHORT).show();
+                        }catch (Exception e){
+                            Toast.makeText(status_dialog.this.getContext(),"UnSuccess",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
         return builder.create();
     }
     @Override

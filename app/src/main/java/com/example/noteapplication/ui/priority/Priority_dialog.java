@@ -15,7 +15,9 @@ import androidx.fragment.app.DialogFragment;
 import com.example.noteapplication.DBHelper;
 import com.example.noteapplication.Login;
 import com.example.noteapplication.R;
+import com.example.noteapplication.ui.category.CategoryOJ;
 import com.example.noteapplication.ui.category.Category_dialog;
+import com.example.noteapplication.ui.category.category_DB;
 
 import java.util.Date;
 
@@ -23,8 +25,10 @@ public class Priority_dialog extends DialogFragment {
     public dialog_Add_Priority_Listener dialogAddPriorityListener ;
     String name  = "-1";
     EditText txt;
-    public Priority_dialog(String name) {
+    int keyId  ;
+    public Priority_dialog(String name,int keyId) {
         this.name= name;
+        this.keyId = keyId;
     }
     public Priority_dialog() {
     }
@@ -42,28 +46,48 @@ public class Priority_dialog extends DialogFragment {
 
                 }
             }).setPositiveButton("add", new DialogInterface.OnClickListener() {
-                                @Override
+                @Override
                 public void onClick(DialogInterface dialog, int which) {
-                     PriorityOJ priorityOJ = null;
-                     String date = java.text.DateFormat.getDateTimeInstance().format(new Date());
-                     try {
-                         priorityOJ = new PriorityOJ(-1,txt.getText().toString(),date);
+                    if(txt.getText().toString().equals(""))
+                    {
+                        Toast.makeText(Priority_dialog.this.getContext(),"error name priority null",Toast.LENGTH_SHORT).show();
+                    }else {
+                        try {
+                            String date = java.text.DateFormat.getDateTimeInstance().format(new Date());
+                            PriorityOJ priorityOJ = new PriorityOJ(-1,txt.getText().toString(),date);
+                            priority_DB priority_db = new priority_DB(Priority_dialog.this.getContext());
+                            priority_db.addPriority(priorityOJ);
+                            Toast.makeText(Priority_dialog.this.getContext(),"insert success",Toast.LENGTH_SHORT).show();
+                        }catch (ClassCastException e){
+                            Toast.makeText(Priority_dialog.this.getContext(),"error insert",Toast.LENGTH_SHORT).show();
+                        }
+                    }
 
-                         Toast.makeText(Priority_dialog.this.getContext(),priorityOJ.toString(),Toast.LENGTH_SHORT).show();
-                     }catch (Exception e){
-                        Toast.makeText(Priority_dialog.this.getContext(),"error insert",Toast.LENGTH_SHORT).show();
-                     }
-                    /*EditText txt =  (EditText)view.findViewById(R.id.inputPriority);
-                    String priority= txt.getText().toString() ;
-                    String date = java.text.DateFormat.getDateTimeInstance().format(new Date());
-                    dialogAddPriorityListener.applyAdd(priority,date);*/
-
-                    priority_DB dbHelper = new priority_DB(Priority_dialog.this.getContext());
-                    boolean success = dbHelper.addPriority(priorityOJ);
                     dialogAddPriorityListener.getData();
-                    Toast.makeText(Priority_dialog.this.getContext(),"Success = " + success,Toast.LENGTH_SHORT).show();
                 }
             });
+        }else { //when click edit
+            EditText txt =  (EditText)view.findViewById(R.id.inputPriority);
+            txt.setText(name);
+            builder.setView(view)
+                    .setTitle("Priority Edit").setNegativeButton("close", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            }).setPositiveButton("save", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    PriorityOJ priorityOJ = new PriorityOJ();
+                    priorityOJ.setName(txt.getText().toString());
+                    priorityOJ.setCreateDate(java.text.DateFormat.getDateTimeInstance().format(new Date()));
+                    priorityOJ.setId(keyId);
+                    priority_DB priority_db = new priority_DB(Priority_dialog.this.getContext());
+                    priority_db.updatePriority(priorityOJ);
+                    dialogAddPriorityListener.getData();
+                }
+            });
+
         }
         return builder.create();
     }

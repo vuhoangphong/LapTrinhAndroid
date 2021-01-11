@@ -10,21 +10,27 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.example.noteapplication.DBHelper;
 import com.example.noteapplication.R;
+import com.example.noteapplication.ui.category.Category_dialog;
+import com.example.noteapplication.ui.category.category;
+import com.example.noteapplication.ui.category.category_DB;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class priority extends Fragment implements Priority_dialog.dialog_Add_Priority_Listener{
+public class priority extends Fragment implements Priority_dialog.dialog_Add_Priority_Listener, PopupMenu.OnMenuItemClickListener{
 
     private  static  String TAG="priority";
     private PriorityViewModel mViewModel;
@@ -46,19 +52,32 @@ public class priority extends Fragment implements Priority_dialog.dialog_Add_Pri
         View v = inflater.inflate(R.layout.priority_fragment, container, false);
         FloatingActionButton b = v.findViewById(R.id.fabAdd);
         listView = v.findViewById(R.id.lvPriority);
-        refreshDB();
+
         b.setOnClickListener(new View.OnClickListener() {  // button click
             @Override
             public void onClick(View v) {
                 openDialog();
             }
         });
-
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                index = position;
+                showPopup(view);
+                return false;
+            }
+        });
+        refreshDB();
         return v;
     }
 
     public  void openDialog(){
         Priority_dialog dialogAddPriority = new Priority_dialog();
+        dialogAddPriority.show(getChildFragmentManager(),"example dialog");
+    }
+
+    public  void openDialogEdit(String name , int key){
+        Priority_dialog dialogAddPriority = new Priority_dialog(name,key);
         dialogAddPriority.show(getChildFragmentManager(),"example dialog");
     }
 
@@ -103,6 +122,29 @@ public class priority extends Fragment implements Priority_dialog.dialog_Add_Pri
             ((TextView)row.findViewById(R.id.name)).setText(p.getName());
             ((TextView)row.findViewById(R.id.date)).setText(p.getCreateDate());
             return row;
+        }
+    }
+
+    public void showPopup(View v){
+        PopupMenu popupMenu = new PopupMenu(getContext(),v);
+        popupMenu.setOnMenuItemClickListener(this);
+        popupMenu.inflate(R.menu.popup_menu_priority);
+        popupMenu.show();
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.edit:
+                openDialogEdit(listPriority.get(index).getName(),listPriority.get(index).getId());
+                return  true;
+            case R.id.delete:
+                priority_DB priority_db = new priority_DB(priority.this.getContext());
+                priority_db.deletePriority(listPriority.get(index).getId());
+                getData();
+                return  true;
+            default:
+                return false;
         }
     }
 

@@ -107,16 +107,31 @@ public class Note_dialog extends DialogFragment {
                             date
                     );
                     note_DB note_db = new note_DB(getContext());
-                   try {
-                       note_db.insetCategory(noteOJ);
-                       note_dialog_listen.getData();
-                   }catch (Exception e){
-                       Toast.makeText(getContext(),"error insert",Toast.LENGTH_SHORT).show();
-                   }
+                  if(checkDataInput(noteOJ)){
+                      try {
+                          note_db.insetCategory(noteOJ);
+                          note_dialog_listen.getData();
+                      }catch (Exception e){
+                          Toast.makeText(getContext(),"error insert",Toast.LENGTH_SHORT).show();
+                      }
+                  }else {
+                      Toast.makeText(getContext(),"error null",Toast.LENGTH_SHORT).show();
+                  }
                 }
             });
         return builder.create();
         }
+
+     private  Boolean checkDataInput(noteOJ noteOJ){
+        if(noteOJ.getCategory().equals("")
+                || noteOJ.getName().equals("")
+                || noteOJ.getPlanDate().equals("")
+                || noteOJ.getPriority().equals("")
+                || noteOJ.getStatus().equals("")
+        )
+            return false;
+        return true;
+     }
 
     @Override
     public void onAttach(@NonNull Context context) {

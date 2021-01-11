@@ -36,7 +36,7 @@ public class home_DB extends DBHelper {
     public int  sumSatatus (){
         int count = 0;
         try {
-            String queryString = "SELECT COUNT(*) as sum FROM " + TABLE_STATUS + " Where IDAcc = " + AccInfo.getId();
+            String queryString = "SELECT COUNT(*) as sum FROM " + TABLE_NOTE + " Where IDAcc = " + AccInfo.getId();
             SQLiteDatabase db = this.getReadableDatabase();
             Cursor cursor = db.rawQuery(queryString,null);
             cursor.moveToFirst();

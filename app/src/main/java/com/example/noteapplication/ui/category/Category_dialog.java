@@ -55,15 +55,20 @@ public class Category_dialog extends DialogFragment {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     EditText txt =  (EditText)view.findViewById(R.id.input);
-
-                    try {
-                        String date = java.text.DateFormat.getDateTimeInstance().format(new Date());
-                        CategoryOJ categoryOJ = new CategoryOJ(-1,txt.getText().toString(),date);
-                        category_DB category_db = new category_DB(Category_dialog.this.getContext());
-                        category_db.insetCategory(categoryOJ);
-                    }catch (ClassCastException e){
-                        Toast.makeText(Category_dialog.this.getContext(),"error insert",Toast.LENGTH_SHORT).show();
+                    if(txt.getText().toString().equals(""))
+                    {
+                        Toast.makeText(Category_dialog.this.getContext(),"error name category null",Toast.LENGTH_SHORT).show();
+                    }else {
+                        try {
+                            String date = java.text.DateFormat.getDateTimeInstance().format(new Date());
+                            CategoryOJ categoryOJ = new CategoryOJ(-1,txt.getText().toString(),date);
+                            category_DB category_db = new category_DB(Category_dialog.this.getContext());
+                            category_db.insetCategory(categoryOJ);
+                        }catch (ClassCastException e){
+                            Toast.makeText(Category_dialog.this.getContext(),"error insert",Toast.LENGTH_SHORT).show();
+                        }
                     }
+
                     dialogAddCategoryListener.getData();
                 }
             });

@@ -115,7 +115,7 @@ public class Note_dialog extends DialogFragment {
                           Toast.makeText(getContext(),"error insert",Toast.LENGTH_SHORT).show();
                       }
                   }else {
-                      Toast.makeText(getContext(),"error null",Toast.LENGTH_SHORT).show();
+                      Toast.makeText(getContext(),R.string.insert_full,Toast.LENGTH_SHORT).show();
                   }
                 }
             });
